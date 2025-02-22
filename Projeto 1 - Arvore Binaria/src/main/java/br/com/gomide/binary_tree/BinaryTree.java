@@ -2,6 +2,8 @@ package br.com.gomide.binary_tree;
 
 public class BinaryTree<T extends Comparable<T>> implements IBinaryTree<T> {
 
+  private Node <T> raiz;
+
   @Override
   public Node<T> createTree(T element) {
      Node node = new Node<>();
@@ -27,8 +29,6 @@ public class BinaryTree<T extends Comparable<T>> implements IBinaryTree<T> {
         auxiliar = percorrer;
       }else{
         node.setValue(auxiliar);
-        //node.setLeft(node);
-        //node.setRight(node);
       }
     }
     throw new UnsupportedOperationException("Unimplemented method 'createTree'");
@@ -42,7 +42,21 @@ public class BinaryTree<T extends Comparable<T>> implements IBinaryTree<T> {
 
   @Override
   public void insert(Node<T> rootNode, T element) {
-    throw new UnsupportedOperationException("Unimplemented method 'insert'");
+    if (element.compareTo(rootNode.getValue()) > 0) {
+        if (rootNode.equals(null)) {
+          Node node = new Node<>();
+          node.setValue(element);
+          rootNode.setRight(node);
+        }      
+    }
+
+    if (element.compareTo(rootNode.getValue()) < 0) {
+      if (rootNode.equals(null)) {
+        Node node = new Node<>();
+        node.setValue(element);
+        rootNode.setLeft(node);
+      }
+    }
   }
 
   @Override
