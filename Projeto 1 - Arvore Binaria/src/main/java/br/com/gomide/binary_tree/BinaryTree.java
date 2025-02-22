@@ -2,18 +2,18 @@ package br.com.gomide.binary_tree;
 
 public class BinaryTree<T extends Comparable<T>> implements IBinaryTree<T> {
 
-  private Node <T> raiz;
+  private Node<T> raiz;
 
   @Override
   public Node<T> createTree(T element) {
-     Node node = new Node<>();
+    Node node = new Node<>();
 
-     node.setValue(element);
+    node.setValue(element);
 
-     node.setLeft(null);
-     node.setRight(null);
-     
-     return node;
+    node.setLeft(null);
+    node.setRight(null);
+
+    return node;
 
   }
 
@@ -27,7 +27,7 @@ public class BinaryTree<T extends Comparable<T>> implements IBinaryTree<T> {
         node.setLeft(null);
         node.setRight(null);
         auxiliar = percorrer;
-      }else{
+      } else {
         node.setValue(auxiliar);
       }
     }
@@ -42,19 +42,23 @@ public class BinaryTree<T extends Comparable<T>> implements IBinaryTree<T> {
 
   @Override
   public void insert(Node<T> rootNode, T element) {
-    if (element.compareTo(rootNode.getValue()) > 0) {
-        if (rootNode.equals(null)) {
-          Node node = new Node<>();
-          node.setValue(element);
-          rootNode.setRight(node);
-        }      
+    if (element.compareTo((T) rootNode.getValue()) > 0) {
+      if (rootNode.getRight() == null) {
+        Node node = new Node<T>();
+        node.setValue(element);
+        rootNode.setRight(node);
+      } else {
+        insert(rootNode.getRight(), element);
+      }
     }
 
     if (element.compareTo(rootNode.getValue()) < 0) {
-      if (rootNode.equals(null)) {
+      if (rootNode.getLeft() == null) {
         Node node = new Node<>();
         node.setValue(element);
         rootNode.setLeft(node);
+      } else {
+        insert(rootNode.getLeft(), element);
       }
     }
   }
