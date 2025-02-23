@@ -43,7 +43,7 @@ public interface IBinaryTree<T extends Comparable<T>> {
    * @param nodeElement
    * @return return true if a node was removed and false if not
    */
-  boolean remove(Node<T> rootNode, T nodeElement);
+  Node<T> remove(Node<T> rootNode, T nodeElement);
 
   /**
    * Get the father node
