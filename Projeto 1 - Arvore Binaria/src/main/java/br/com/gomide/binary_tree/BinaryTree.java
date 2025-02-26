@@ -137,7 +137,10 @@ public class BinaryTree<T extends Comparable<T>> implements IBinaryTree<T> {
   @Override
   public Node<T> getByElement(Node<T> rootNode, T element) {
     if (rootNode.getValue() == null) {
-      
+      /*
+      Resolver o problema do valor nulo.
+      E fazer a tratação do valor não encontrado na árvore. 
+      */
     }
 
     if (rootNode.getValue().compareTo((T)element) > 0) {
