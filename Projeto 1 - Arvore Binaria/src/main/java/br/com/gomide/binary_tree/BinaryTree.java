@@ -136,8 +136,23 @@ public class BinaryTree<T extends Comparable<T>> implements IBinaryTree<T> {
 
   @Override
   public Node<T> getByElement(Node<T> rootNode, T element) {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'getByElement'");
+    if (rootNode.getValue() == null) {
+      
+    }
+
+    if (rootNode.getValue().compareTo((T)element) > 0) {
+      return getByElement(rootNode.getRight(), element);
+    }
+
+    if (rootNode.getValue().compareTo((T)element) < 0) {
+      return getByElement(rootNode.getLeft(), element);
+    }
+
+    if (rootNode.getValue().compareTo((T)element) == 0) {
+      return rootNode;
+    }
+    
+    return null;
   }
 
   @Override
