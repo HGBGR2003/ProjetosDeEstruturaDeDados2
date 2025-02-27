@@ -134,6 +134,7 @@ public class BinaryTree<T extends Comparable<T>> implements IBinaryTree<T> {
     throw new UnsupportedOperationException("Unimplemented method 'getBrother'");
   }
 
+  // Buscar um elemento na árvore binária 3.
   @Override
   public Node<T> getByElement(Node<T> rootNode, T element) {
     if (rootNode.getValue() == null) {
@@ -143,11 +144,11 @@ public class BinaryTree<T extends Comparable<T>> implements IBinaryTree<T> {
       */
     }
 
-    if (rootNode.getValue().compareTo((T)element) > 0) {
+    if (rootNode.getValue().compareTo((T)element) < 0) {
       return getByElement(rootNode.getRight(), element);
     }
 
-    if (rootNode.getValue().compareTo((T)element) < 0) {
+    if (rootNode.getValue().compareTo((T)element) > 0) {
       return getByElement(rootNode.getLeft(), element);
     }
 
