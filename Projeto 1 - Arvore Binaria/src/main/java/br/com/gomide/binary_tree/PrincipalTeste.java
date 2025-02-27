@@ -17,8 +17,7 @@ public class PrincipalTeste {
         BinaryTree <Integer> arvoreBinaria = new BinaryTree<>();
 
         Node<Integer> node = arvoreBinaria.createTree(testePrincipal);
-        Node<Integer> raiz = new Node<>();
-        raiz = arvoreBinaria.getByElement(node, 4);
-        imprimirEmOrdem(raiz);
+        //Node<Integer> raiz = new Node<>();
+       imprimirEmOrdem(arvoreBinaria.getBrother(node,10));
     }
 }

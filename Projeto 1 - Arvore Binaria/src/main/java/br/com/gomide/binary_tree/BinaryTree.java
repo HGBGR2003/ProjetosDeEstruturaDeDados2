@@ -130,32 +130,43 @@ public class BinaryTree<T extends Comparable<T>> implements IBinaryTree<T> {
 
   @Override
   public Node<T> getBrother(Node<T> rootNode, T nodeElement) {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'getBrother'");
+    if (rootNode.getValue().compareTo((T) nodeElement) < 0) {
+      if (rootNode.getRight() != null) {
+        if (rootNode.getRight().getValue().compareTo((T) nodeElement) == 0){
+         return rootNode.getLeft();
+        }
+        return getBrother(rootNode.getRight(), nodeElement);
+      }
+    }
+
+    if (rootNode.getValue().compareTo((T) nodeElement) > 0) {
+      if (rootNode.getLeft() != null) {
+        if (rootNode.getLeft().getValue().compareTo((T) nodeElement) == 0){
+          return rootNode.getRight();
+        }
+        return getBrother(rootNode.getLeft(), nodeElement);
+      }
+    }
+
+    return null;
   }
 
   // Buscar um elemento na árvore binária 3.
   @Override
   public Node<T> getByElement(Node<T> rootNode, T element) {
-    if (rootNode.getValue() == null) {
-      /*
-      Resolver o problema do valor nulo.
-      E fazer a tratação do valor não encontrado na árvore. 
-      */
-    }
-
     if (rootNode.getValue().compareTo((T)element) < 0) {
-      return getByElement(rootNode.getRight(), element);
+      if (rootNode.getRight() != null) return getByElement(rootNode.getRight(), element);
+      if (rootNode.getRight() == null) System.out.println("Elemento não encontrado");
     }
 
     if (rootNode.getValue().compareTo((T)element) > 0) {
-      return getByElement(rootNode.getLeft(), element);
+      if (rootNode.getLeft() != null) return getByElement(rootNode.getLeft(), element);
+      if (rootNode.getLeft() == null) System.out.println("Elemento não encontrado");
     }
 
     if (rootNode.getValue().compareTo((T)element) == 0) {
       return rootNode;
     }
-    
     return null;
   }
 
