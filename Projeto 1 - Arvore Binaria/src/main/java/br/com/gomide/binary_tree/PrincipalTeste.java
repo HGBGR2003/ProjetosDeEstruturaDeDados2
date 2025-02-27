@@ -18,6 +18,6 @@ public class PrincipalTeste {
 
         Node<Integer> node = arvoreBinaria.createTree(testePrincipal);
         //Node<Integer> raiz = new Node<>();
-       imprimirEmOrdem(arvoreBinaria.getBrother(node,10));
+       imprimirEmOrdem(arvoreBinaria.getBrother(node,4));
     }
 }
