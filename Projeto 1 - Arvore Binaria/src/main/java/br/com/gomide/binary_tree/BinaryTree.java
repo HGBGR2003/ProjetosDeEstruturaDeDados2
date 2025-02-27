@@ -150,8 +150,7 @@ public class BinaryTree<T extends Comparable<T>> implements IBinaryTree<T> {
 
     return null;
   }
-
-  // Buscar um elemento na árvore binária 3.
+  
   @Override
   public Node<T> getByElement(Node<T> rootNode, T element) {
     if (rootNode.getValue().compareTo((T)element) < 0) {
