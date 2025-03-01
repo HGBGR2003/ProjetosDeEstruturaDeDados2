@@ -85,8 +85,8 @@ public class BinaryTree<T extends Comparable<T>> implements IBinaryTree<T> {
         int esquerdaDireita = 0;
         Node<T> node = null;
         for (int i = 0; verificar; i++) {
-          if(i == 0){
-            if(raiz.getRight() != null){
+          if (i == 0) {
+            if (raiz.getRight() != null) {
               node = raiz.getRight();
               esquerdaDireita = 1;
             } else {
@@ -94,15 +94,15 @@ public class BinaryTree<T extends Comparable<T>> implements IBinaryTree<T> {
               esquerdaDireita = -1;
             }
           }
-          if(i > 0){
+          if (i > 0) {
             if (esquerdaDireita > 0) {
-              if(node.getLeft() != null){
+              if (node.getLeft() != null) {
                 node = node.getLeft();
               } else {
                 verificar = false;
               }
-            } else if (esquerdaDireita < 0){
-              if(node.getRight() != null){
+            } else if (esquerdaDireita < 0) {
+              if (node.getRight() != null) {
                 node = node.getRight();
               } else {
                 verificar = false;
@@ -111,9 +111,9 @@ public class BinaryTree<T extends Comparable<T>> implements IBinaryTree<T> {
           }
         }
         root.setValue((T) node.getValue());
-        if(esquerdaDireita > 0){
+        if (esquerdaDireita > 0) {
           root.setRight(remove(root, node.getValue()));
-        } else if(esquerdaDireita < 0){
+        } else if (esquerdaDireita < 0) {
           root.setLeft(remove(root, node.getValue()));
         }
       }
@@ -124,16 +124,30 @@ public class BinaryTree<T extends Comparable<T>> implements IBinaryTree<T> {
 
   @Override
   public Node<T> getFather(Node<T> rootNode, T nodeElement) {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'getFather'");
+    if (rootNode == null) {
+      return null;
+    }
+
+    if (rootNode.getRight() != null && rootNode.getRight().getValue().compareTo(nodeElement) == 0) {
+      return rootNode;
+    } else if (rootNode.getLeft() != null && rootNode.getLeft().getValue().compareTo(nodeElement) == 0) {
+      return rootNode;
+    } else if (rootNode.getValue().compareTo(nodeElement) < 0) {
+      return getFather(rootNode.getRight(), nodeElement);
+    } else if (rootNode.getValue().compareTo(nodeElement) > 0) {
+      return getFather(rootNode.getLeft(), nodeElement);
+    }
+
+    return null;
+
   }
 
   @Override
   public Node<T> getBrother(Node<T> rootNode, T nodeElement) {
     if (rootNode.getValue().compareTo((T) nodeElement) < 0) {
       if (rootNode.getRight() != null) {
-        if (rootNode.getRight().getValue().compareTo((T) nodeElement) == 0){
-         return rootNode.getLeft();
+        if (rootNode.getRight().getValue().compareTo((T) nodeElement) == 0) {
+          return rootNode.getLeft();
         }
         return getBrother(rootNode.getRight(), nodeElement);
       }
@@ -141,7 +155,7 @@ public class BinaryTree<T extends Comparable<T>> implements IBinaryTree<T> {
 
     if (rootNode.getValue().compareTo((T) nodeElement) > 0) {
       if (rootNode.getLeft() != null) {
-        if (rootNode.getLeft().getValue().compareTo((T) nodeElement) == 0){
+        if (rootNode.getLeft().getValue().compareTo((T) nodeElement) == 0) {
           return rootNode.getRight();
         }
         return getBrother(rootNode.getLeft(), nodeElement);
@@ -150,20 +164,24 @@ public class BinaryTree<T extends Comparable<T>> implements IBinaryTree<T> {
 
     return null;
   }
-  
+
   @Override
   public Node<T> getByElement(Node<T> rootNode, T element) {
-    if (rootNode.getValue().compareTo((T)element) < 0) {
-      if (rootNode.getRight() != null) return getByElement(rootNode.getRight(), element);
-      if (rootNode.getRight() == null) System.out.println("Elemento não encontrado");
+    if (rootNode.getValue().compareTo((T) element) < 0) {
+      if (rootNode.getRight() != null)
+        return getByElement(rootNode.getRight(), element);
+      if (rootNode.getRight() == null)
+        System.out.println("Elemento não encontrado");
     }
 
-    if (rootNode.getValue().compareTo((T)element) > 0) {
-      if (rootNode.getLeft() != null) return getByElement(rootNode.getLeft(), element);
-      if (rootNode.getLeft() == null) System.out.println("Elemento não encontrado");
+    if (rootNode.getValue().compareTo((T) element) > 0) {
+      if (rootNode.getLeft() != null)
+        return getByElement(rootNode.getLeft(), element);
+      if (rootNode.getLeft() == null)
+        System.out.println("Elemento não encontrado");
     }
 
-    if (rootNode.getValue().compareTo((T)element) == 0) {
+    if (rootNode.getValue().compareTo((T) element) == 0) {
       return rootNode;
     }
     return null;

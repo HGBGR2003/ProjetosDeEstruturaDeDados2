@@ -12,12 +12,12 @@ public class PrincipalTeste {
         }
     }
     
-    //Valores da Arvore Binária: 1 3 4 7 8
+    //Valores da Arvore Binária: 5,3,7,1,4,9
     public static void main(String[] args) {
         BinaryTree <Integer> arvoreBinaria = new BinaryTree<>();
 
         Node<Integer> node = arvoreBinaria.createTree(testePrincipal);
         //Node<Integer> raiz = new Node<>();
-       imprimirEmOrdem(arvoreBinaria.getBrother(node,4));
+       imprimirEmOrdem(arvoreBinaria.getFather(node, 10));
     }
 }
