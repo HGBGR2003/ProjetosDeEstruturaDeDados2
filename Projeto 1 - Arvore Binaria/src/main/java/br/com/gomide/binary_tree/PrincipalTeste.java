@@ -11,13 +11,13 @@ public class PrincipalTeste {
             imprimirEmOrdem(node.getRight());
         }
     }
-    
-    //Valores da Arvore Binária: 5,3,7,1,4,9
+
+    //Arvore Original: 5,3,7,1,4,9
     public static void main(String[] args) {
         BinaryTree <Integer> arvoreBinaria = new BinaryTree<>();
 
         Node<Integer> node = arvoreBinaria.createTree(testePrincipal);
         //Node<Integer> raiz = new Node<>();
-        System.out.println(arvoreBinaria.calculateTreeDepth(node));
+        imprimirEmOrdem(arvoreBinaria.remove(node,5));
     }
 }

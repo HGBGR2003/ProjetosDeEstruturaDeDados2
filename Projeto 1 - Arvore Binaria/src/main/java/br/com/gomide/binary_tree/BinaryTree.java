@@ -173,8 +173,7 @@ public class BinaryTree<T extends Comparable<T>> implements IBinaryTree<T> {
 
   @Override
   public Integer calculateNodeLevel(Node<T> rootNode, T nodeElement) {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'calculateNodeLevel'");
+      return null;
   }
 
   @Override
