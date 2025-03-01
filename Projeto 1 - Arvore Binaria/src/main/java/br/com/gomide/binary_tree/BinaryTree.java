@@ -62,65 +62,37 @@ public class BinaryTree<T extends Comparable<T>> implements IBinaryTree<T> {
 
   @Override
   public Node<T> remove(Node<T> rootNode, T nodeElement) {
-    Node<T> root = rootNode;
     if (rootNode == null) {
       throw new UnsupportedOperationException("Não é possível remover o item, pois a árvore está vazia.");
     }
-    if (nodeElement.compareTo((T) rootNode.getValue()) > 0) {
-      rootNode.setRight(remove(rootNode.getRight(), nodeElement));
-    }
-    if (nodeElement.compareTo((T) rootNode.getValue()) < 0) {
+    if (nodeElement.compareTo(rootNode.getValue()) < 0) {
       rootNode.setLeft(remove(rootNode.getLeft(), nodeElement));
-    }
-    if (nodeElement.compareTo((T) rootNode.getValue()) == 0) {
+    } else if (nodeElement.compareTo(rootNode.getValue()) > 0) {
+      rootNode.setRight(remove(rootNode.getRight(), nodeElement));
+    } else {
       if (rootNode.getLeft() == null && rootNode.getRight() == null) {
-        return rootNode = null;
+        return null;
       }
-      if (rootNode.getLeft() == null && rootNode.getRight() != null) {
+      if (rootNode.getLeft() == null) {
         return rootNode.getRight();
-      } else if (rootNode.getRight() == null && rootNode.getLeft() != null) {
+      } else if (rootNode.getRight() == null) {
         return rootNode.getLeft();
-      } else if (rootNode.getLeft() != null && rootNode.getRight() != null) {
-        boolean verificar = true;
-        int esquerdaDireita = 0;
-        Node<T> node = null;
-        for (int i = 0; verificar; i++) {
-          if (i == 0) {
-            if (raiz.getRight() != null) {
-              node = raiz.getRight();
-              esquerdaDireita = 1;
-            } else {
-              node = raiz.getLeft();
-              esquerdaDireita = -1;
-            }
-          }
-          if (i > 0) {
-            if (esquerdaDireita > 0) {
-              if (node.getLeft() != null) {
-                node = node.getLeft();
-              } else {
-                verificar = false;
-              }
-            } else if (esquerdaDireita < 0) {
-              if (node.getRight() != null) {
-                node = node.getRight();
-              } else {
-                verificar = false;
-              }
-            }
-          }
-        }
-        root.setValue((T) node.getValue());
-        if (esquerdaDireita > 0) {
-          root.setRight(remove(root, node.getValue()));
-        } else if (esquerdaDireita < 0) {
-          root.setLeft(remove(root, node.getValue()));
-        }
       }
+      Node<T> successor = findMin(rootNode.getRight());
+      rootNode.setValue(successor.getValue());
+      rootNode.setRight(remove(rootNode.getRight(), successor.getValue()));
     }
-
-    return raiz = root;
+    return rootNode;
   }
+
+  // Método auxiliar para encontrar o menor nó (sucessor)
+  private Node<T> findMin(Node<T> node) {
+    while (node.getLeft() != null) {
+      node = node.getLeft();
+    }
+    return node;
+  }
+
 
   @Override
   public Node<T> getFather(Node<T> rootNode, T nodeElement) {
