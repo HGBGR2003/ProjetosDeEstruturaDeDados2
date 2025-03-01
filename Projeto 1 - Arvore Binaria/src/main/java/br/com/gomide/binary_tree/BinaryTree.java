@@ -189,35 +189,14 @@ public class BinaryTree<T extends Comparable<T>> implements IBinaryTree<T> {
 
   @Override
   public Integer calculateTreeDepth(Node<T> rootNode) {
-    int depthOfTree = 0;
-    boolean isTrueOrFalse = true;
-    int leftOrRight = 0;
-
-    Node<T> node = rootNode;
-
-    while (isTrueOrFalse) {
-      depthOfTree++;
-      if (node.getRight() != null) {
-        node = node.getRight();
-        leftOrRight = 1;
-      } else if (node.getLeft() != null) {
-        node = node.getLeft();
-        leftOrRight = -1;
-      } else {
-        isTrueOrFalse = false;
-      }
-
-      if (leftOrRight > 0) {
-        if (node.getLeft() == null && node.getRight() == null) {
-          isTrueOrFalse = false;
-        }
-      } else if (leftOrRight < 0) {
-        if (node.getLeft() == null && node.getRight() == null) {
-          isTrueOrFalse = false;
-        }
-      }
+    if (rootNode == null) {
+      return -1;
     }
-    return depthOfTree;
+
+    int leftDepth = calculateTreeDepth(rootNode.getLeft());
+    int rightDepth = calculateTreeDepth(rootNode.getRight());
+
+    return Math.max(leftDepth, rightDepth) + 1;
   }
 
   @Override
