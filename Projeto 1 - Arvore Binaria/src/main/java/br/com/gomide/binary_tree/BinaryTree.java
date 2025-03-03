@@ -203,8 +203,10 @@ public class BinaryTree<T extends Comparable<T>> implements IBinaryTree<T> {
 
   @Override
   public String toString(Node<T> rootNode) {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'toString'");
+    if(rootNode == null){
+        return "null";
+    }
+    return "(" + rootNode.getValue() + ", " + toString(rootNode.getLeft()) + ", " + toString(rootNode.getRight()) + ")";
   }
 
 }
