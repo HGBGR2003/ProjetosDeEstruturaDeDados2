@@ -2,29 +2,24 @@ package br.com.gomide.binary_tree;
 
 public class BinaryTree<T extends Comparable<T>> implements IBinaryTree<T> {
 
-  private Node<T> raiz;
-
   @Override
   public Node<T> createTree(T element) {
     Node<T> node = new Node<>();
     node.setValue(element);
     node.setLeft(null);
     node.setRight(null);
-    return raiz = node;
+    return node;
   }
 
   @Override
   public Node<T> createTree(T[] elements) {
     Node<T> node = null;
-    if (raiz == null || raiz.getValue() == null) {
-      node = createTree(elements[0]);
-    } else if (raiz != null && raiz.getValue() != null) {
-      throw new UnsupportedOperationException("Já existe uma árvore. Por favor insira os valores na árvore existente.");
-    }
+    node = createTree(elements[0]);
+
     for (int i = 1; i < elements.length; i++) {
       insert(node, elements[i]);
     }
-    return raiz = node;
+    return node;
   }
 
   @Override
@@ -159,6 +154,7 @@ public class BinaryTree<T extends Comparable<T>> implements IBinaryTree<T> {
     return null;
   }
 
+  //Calculo para identifcação dos niveis da arvore binária.
   @Override
   public Integer calculateTreeDepth(Node<T> rootNode) {
     if (rootNode == null) {
@@ -171,8 +167,37 @@ public class BinaryTree<T extends Comparable<T>> implements IBinaryTree<T> {
     return Math.max(leftDepth, rightDepth) + 1;
   }
 
+  //Calculo do nó atual, e seu nível.
   @Override
   public Integer calculateNodeLevel(Node<T> rootNode, T nodeElement) {
+      if (rootNode == null) {
+        return null;
+      }
+
+      if (rootNode.getValue().compareTo((T) nodeElement) == 0) {
+        return 0;
+      }
+
+      if (rootNode.getValue().compareTo(nodeElement) < 0) {
+        if (rootNode.getRight() != null){
+          if (calculateNodeLevel(rootNode.getRight(), nodeElement) == null){
+            return null;
+          }else{
+            return calculateNodeLevel(rootNode.getRight(), nodeElement) + 1;
+          }
+        }
+      }
+
+      if (rootNode.getValue().compareTo(nodeElement) > 0) {
+        if (rootNode.getLeft() != null){
+          if(calculateNodeLevel(rootNode.getLeft(), nodeElement) == null){
+            return null;
+          }else{
+            return calculateNodeLevel(rootNode.getLeft(), nodeElement) + 1;
+          }
+        }
+      }
+
       return null;
   }
 
