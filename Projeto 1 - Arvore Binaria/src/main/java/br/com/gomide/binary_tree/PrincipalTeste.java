@@ -19,7 +19,7 @@ public class PrincipalTeste {
         Node<Integer> node = arvoreBinaria.createTree(testePrincipal);
         //Node<Integer> raiz = new Node<>();
         //imprimirEmOrdem(arvoreBinaria.remove(node,5));
-        System.out.println(arvoreBinaria.degree(node, 7));
+        System.out.println(arvoreBinaria.toString(node));
 
     }
 }

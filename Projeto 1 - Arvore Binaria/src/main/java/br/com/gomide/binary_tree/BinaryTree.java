@@ -110,7 +110,6 @@ public class BinaryTree<T extends Comparable<T>> implements IBinaryTree<T> {
         return rootNode;
     }
 
-    // Método auxiliar para encontrar o menor nó (sucessor)
     private Node<T> findMin(Node<T> node) {
         while (node.getLeft() != null) {
             node = node.getLeft();
@@ -184,7 +183,7 @@ public class BinaryTree<T extends Comparable<T>> implements IBinaryTree<T> {
         return null;
     }
 
-    //Calculo para identifcação dos niveis da arvore binária.
+   
     @Override
     public Integer calculateTreeDepth(Node<T> rootNode) {
         if (rootNode == null) {
@@ -197,7 +196,6 @@ public class BinaryTree<T extends Comparable<T>> implements IBinaryTree<T> {
         return Math.max(leftDepth, rightDepth) + 1;
     }
 
-    //Calculo do nó atual, e seu nível.
     @Override
     public Integer calculateNodeLevel(Node<T> rootNode, T nodeElement) {
         if (rootNode == null) {
@@ -234,9 +232,31 @@ public class BinaryTree<T extends Comparable<T>> implements IBinaryTree<T> {
     @Override
     public String toString(Node<T> rootNode) {
         if (rootNode == null) {
-            return "null";
+            return "";
         }
-        return "(" + rootNode.getValue() + ", " + toString(rootNode.getLeft()) + ", " + toString(rootNode.getRight()) + ")";
+
+        StringBuilder result = new StringBuilder();
+        result.append(rootNode.getValue());
+    
+        String leftStr = toString(rootNode.getLeft());
+        String rightStr = toString(rootNode.getRight());
+    
+        if (!leftStr.isEmpty() || !rightStr.isEmpty()) {
+            result.append(" (");
+            if (!leftStr.isEmpty()) {
+                result.append("left:").append(leftStr);
+            }
+            if (!rightStr.isEmpty()) {
+                if (!leftStr.isEmpty()) {
+                    result.append(" ");
+                }
+                result.append("right:").append(rightStr);
+            }
+            result.append(")");
+        }
+
+        String finalResult = result.toString();        
+        return finalResult;
     }
 
 }
