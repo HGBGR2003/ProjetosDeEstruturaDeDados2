@@ -2,7 +2,7 @@ package br.com.gomide.binary_tree;
 
 public class PrincipalTeste {
     
-    public static Integer [] testePrincipal = {5,3,7,1,4,9};
+    public static Integer [] testePrincipal = { 6, 2, 8, 1, 4, 3 };
 
     public static void imprimirEmOrdem(Node <Integer> node){
         if (node != null) {

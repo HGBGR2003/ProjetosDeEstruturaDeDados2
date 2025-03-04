@@ -228,20 +228,43 @@ public class BinaryTree<T extends Comparable<T>> implements IBinaryTree<T> {
 
     @Override
     public String toString(Node<T> rootNode) {
-        
-        // StringBuilder sb = new StringBuilder();
-        // sb.append(rootNode.getValue());
+        StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
+        int counter = 0;
+        String verification = "toString";
 
-        // if (rootNode.getLeft().getValue() != null || rootNode.getRight().getValue() != null) {
-        //     sb.append(" (");
-        //     if (rootNode.getLeft().getValue() != null) sb.append("left:").append(rootNode.getLeft().getValue());
-        //     if (rootNode.getLeft().getValue() != null && rootNode.getRight().getValue() != null) sb.append(" ");
-        //     if (rootNode.getRight().getValue() != null) sb.append("right:").append(rootNode.getRight().getValue());
-        //     sb.append(")");
-        // }
+        if (rootNode == null) {
+            return "";
+        }
 
-        // return sb.toString(); 
+        StringBuilder result = new StringBuilder();
+        result.append(rootNode.getValue());
 
-        //Não tive sucesso.
+        String leftStr = toString(rootNode.getLeft());
+        String rightStr = toString(rootNode.getRight());
+
+        if (!leftStr.isEmpty() || !rightStr.isEmpty()) {
+            result.append(" (");
+            if (!leftStr.isEmpty()) {
+                result.append("left:").append(leftStr);
+            }
+            if (!rightStr.isEmpty()) {
+                if (!leftStr.isEmpty()) {
+                    result.append(" ");
+                }
+                result.append("right:").append(rightStr);
+            }
+            result.append(")");
+        }
+        for (StackTraceElement element : stackTrace) {
+            if (element.getMethodName().equals(verification)) {
+                counter++;
+            }
+        }
+
+        if (counter <= 1) {
+            result.insert(0, "root:");
+        }
+
+        return result.toString();
     }
 }
