@@ -253,7 +253,7 @@ public class BinaryTree<T extends Comparable<T>> implements IBinaryTree<T> {
                 }
                 result.append("right:").append(rightStr);
             }
-            result.append(")");
+                result.append(")");
         }
         for (StackTraceElement element : stackTrace) {
             if (element.getMethodName().equals(verification)) {
