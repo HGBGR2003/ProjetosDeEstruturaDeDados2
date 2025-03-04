@@ -57,7 +57,6 @@ public class BinaryTree<T extends Comparable<T>> implements IBinaryTree<T> {
         return null;
     }
 
-
     @Override
     public void insert(Node<T> rootNode, T element) {
         if (rootNode.getValue() == null) {
@@ -116,7 +115,6 @@ public class BinaryTree<T extends Comparable<T>> implements IBinaryTree<T> {
         }
         return node;
     }
-
 
     @Override
     public Node<T> getFather(Node<T> rootNode, T nodeElement) {
@@ -183,7 +181,6 @@ public class BinaryTree<T extends Comparable<T>> implements IBinaryTree<T> {
         return null;
     }
 
-   
     @Override
     public Integer calculateTreeDepth(Node<T> rootNode) {
         if (rootNode == null) {
@@ -198,7 +195,7 @@ public class BinaryTree<T extends Comparable<T>> implements IBinaryTree<T> {
 
     @Override
     public Integer calculateNodeLevel(Node<T> rootNode, T nodeElement) {
-        if (rootNode == null) {
+        if (rootNode == null || nodeElement == null) {
             return null;
         }
 
@@ -231,32 +228,20 @@ public class BinaryTree<T extends Comparable<T>> implements IBinaryTree<T> {
 
     @Override
     public String toString(Node<T> rootNode) {
-        if (rootNode == null) {
-            return "";
-        }
+        
+        // StringBuilder sb = new StringBuilder();
+        // sb.append(rootNode.getValue());
 
-        StringBuilder result = new StringBuilder();
-        result.append(rootNode.getValue());
-    
-        String leftStr = toString(rootNode.getLeft());
-        String rightStr = toString(rootNode.getRight());
-    
-        if (!leftStr.isEmpty() || !rightStr.isEmpty()) {
-            result.append(" (");
-            if (!leftStr.isEmpty()) {
-                result.append("left:").append(leftStr);
-            }
-            if (!rightStr.isEmpty()) {
-                if (!leftStr.isEmpty()) {
-                    result.append(" ");
-                }
-                result.append("right:").append(rightStr);
-            }
-            result.append(")");
-        }
+        // if (rootNode.getLeft().getValue() != null || rootNode.getRight().getValue() != null) {
+        //     sb.append(" (");
+        //     if (rootNode.getLeft().getValue() != null) sb.append("left:").append(rootNode.getLeft().getValue());
+        //     if (rootNode.getLeft().getValue() != null && rootNode.getRight().getValue() != null) sb.append(" ");
+        //     if (rootNode.getRight().getValue() != null) sb.append("right:").append(rootNode.getRight().getValue());
+        //     sb.append(")");
+        // }
 
-        String finalResult = result.toString();        
-        return finalResult;
+        // return sb.toString(); 
+
+        //Não tive sucesso.
     }
-
 }

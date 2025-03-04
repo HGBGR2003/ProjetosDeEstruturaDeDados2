@@ -11,7 +11,7 @@ public class PrincipalTeste {
             imprimirEmOrdem(node.getRight());
         }
     }
-
+    
     //Arvore Original: 5,3,7,1,4,9
     public static void main(String[] args) {
         BinaryTree <Integer> arvoreBinaria = new BinaryTree<>();
