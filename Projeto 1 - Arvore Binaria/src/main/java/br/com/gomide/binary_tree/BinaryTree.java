@@ -245,16 +245,23 @@ public class BinaryTree<T extends Comparable<T>> implements IBinaryTree<T> {
         if (!leftStr.isEmpty() || !rightStr.isEmpty()) {
             result.append(" (");
             if (!leftStr.isEmpty()) {
-                result.append("left:").append(leftStr);
+                result.append("left:").append(leftStr).append(" ");
             }
             if (!rightStr.isEmpty()) {
-                if (!leftStr.isEmpty()) {
-                    result.append(" ");
-                }
-                result.append("right:").append(rightStr);
+                // if (!leftStr.isEmpty()) {
+                // result.append(" ");
+                // }
+                result.append("right:").append(rightStr).append(" ");
             }
-                result.append(")");
+
+            if (result.substring(result.length() - 2).equals(") ")) {
+                result.delete(result.length() - 1, result.length());
+            }
+
+
+            result.append(")");
         }
+
         for (StackTraceElement element : stackTrace) {
             if (element.getMethodName().equals(verification)) {
                 counter++;
