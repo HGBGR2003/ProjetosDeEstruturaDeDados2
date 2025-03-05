@@ -82,6 +82,9 @@ public class BinaryTree<T extends Comparable<T>> implements IBinaryTree<T> {
                 insert(rootNode.getLeft(), element);
             }
         }
+
+
+        
     }
 
     @Override
@@ -237,6 +240,7 @@ public class BinaryTree<T extends Comparable<T>> implements IBinaryTree<T> {
         }
 
         StringBuilder result = new StringBuilder();
+
         result.append(rootNode.getValue());
 
         String leftStr = toString(rootNode.getLeft());
@@ -244,20 +248,23 @@ public class BinaryTree<T extends Comparable<T>> implements IBinaryTree<T> {
 
         if (!leftStr.isEmpty() || !rightStr.isEmpty()) {
             result.append(" (");
+     
+            if (result.substring(result.length() - 2).equals(") ")) {
+                result.delete(result.length() - 1, result.length());     
+            }
             if (!leftStr.isEmpty()) {
                 result.append("left:").append(leftStr).append(" ");
             }
             if (!rightStr.isEmpty()) {
-                // if (!leftStr.isEmpty()) {
-                // result.append(" ");
-                // }
+                if (result.substring(result.length() - 2).equals(") ")) {
+                    result.delete(result.length() - 1, result.length());
+                }
                 result.append("right:").append(rightStr).append(" ");
             }
 
             if (result.substring(result.length() - 2).equals(") ")) {
                 result.delete(result.length() - 1, result.length());
             }
-
 
             result.append(")");
         }
