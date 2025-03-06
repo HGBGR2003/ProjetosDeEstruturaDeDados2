@@ -82,9 +82,6 @@ public class BinaryTree<T extends Comparable<T>> implements IBinaryTree<T> {
                 insert(rootNode.getLeft(), element);
             }
         }
-
-
-        
     }
 
     @Override
@@ -229,8 +226,8 @@ public class BinaryTree<T extends Comparable<T>> implements IBinaryTree<T> {
         return null;
     }
 
-    @Override
-    public String toString(Node<T> rootNode) {
+     @Override
+     public String toString(Node<T> rootNode) {
         StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
         int counter = 0;
         String verification = "toString";
@@ -241,25 +238,25 @@ public class BinaryTree<T extends Comparable<T>> implements IBinaryTree<T> {
 
         StringBuilder result = new StringBuilder();
 
-        result.append(rootNode.getValue());
+        result.append(rootNode.getValue() + " ");
 
         String leftStr = toString(rootNode.getLeft());
         String rightStr = toString(rootNode.getRight());
 
         if (!leftStr.isEmpty() || !rightStr.isEmpty()) {
-            result.append(" (");
-     
+            result.append("(");
+
             if (result.substring(result.length() - 2).equals(") ")) {
-                result.delete(result.length() - 1, result.length());     
+                result.delete(result.length() - 1, result.length());
             }
             if (!leftStr.isEmpty()) {
-                result.append("left:").append(leftStr).append(" ");
+                result.append("left:").append(leftStr);
             }
             if (!rightStr.isEmpty()) {
                 if (result.substring(result.length() - 2).equals(") ")) {
                     result.delete(result.length() - 1, result.length());
                 }
-                result.append("right:").append(rightStr).append(" ");
+                result.append("right:").append(rightStr);
             }
 
             if (result.substring(result.length() - 2).equals(") ")) {
