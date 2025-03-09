@@ -102,18 +102,28 @@ public class BinaryTree<T extends Comparable<T>> implements IBinaryTree<T> {
             } else if (rootNode.getRight() == null) {
                 return rootNode.getLeft();
             }
-            Node<T> successor = findMin(rootNode.getRight());
+
+            Node<T> successor = rootNode.getRight();
             rootNode.setValue(successor.getValue());
+
             rootNode.setRight(remove(rootNode.getRight(), successor.getValue()));
+
+            if (rootNode.getRight() != null && rootNode.getValue() != null &&
+                rootNode.getRight().getValue() != null &&
+                rootNode.getValue().compareTo(rootNode.getRight().getValue()) > 0) {
+
+                Node<T> leftTree = rootNode.getRight();
+                 // Elimina a criação desnecessária de um novo nó
+                if (rootNode.getLeft() != null) {
+                    leftTree.setLeft(rootNode.getLeft()); // Define o nó esquerdo
+                }
+                
+                rootNode.setRight(null); // Remove o nó à direita do nó raiz
+                rootNode.setLeft(leftTree); // Faz o reordenamento
+            }
+
         }
         return rootNode;
-    }
-
-    private Node<T> findMin(Node<T> node) {
-        while (node.getLeft() != null) {
-            node = node.getLeft();
-        }
-        return node;
     }
 
     @Override
@@ -226,8 +236,8 @@ public class BinaryTree<T extends Comparable<T>> implements IBinaryTree<T> {
         return null;
     }
 
-     @Override
-     public String toString(Node<T> rootNode) {
+    @Override
+    public String toString(Node<T> rootNode) {
         StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
         int counter = 0;
         String verification = "toString";
