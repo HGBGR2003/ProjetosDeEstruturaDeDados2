@@ -102,26 +102,19 @@ public class BinaryTree<T extends Comparable<T>> implements IBinaryTree<T> {
             } else if (rootNode.getRight() == null) {
                 return rootNode.getLeft();
             }
-
             Node<T> successor = rootNode.getRight();
             rootNode.setValue(successor.getValue());
-
             rootNode.setRight(remove(rootNode.getRight(), successor.getValue()));
-
             if (rootNode.getRight() != null && rootNode.getValue() != null &&
                 rootNode.getRight().getValue() != null &&
                 rootNode.getValue().compareTo(rootNode.getRight().getValue()) > 0) {
-
                 Node<T> leftTree = rootNode.getRight();
-                 // Elimina a criação desnecessária de um novo nó
                 if (rootNode.getLeft() != null) {
-                    leftTree.setLeft(rootNode.getLeft()); // Define o nó esquerdo
+                    leftTree.setLeft(rootNode.getLeft());
                 }
-                
-                rootNode.setRight(null); // Remove o nó à direita do nó raiz
-                rootNode.setLeft(leftTree); // Faz o reordenamento
+                rootNode.setRight(null);
+                rootNode.setLeft(leftTree);
             }
-
         }
         return rootNode;
     }
@@ -199,7 +192,6 @@ public class BinaryTree<T extends Comparable<T>> implements IBinaryTree<T> {
 
         int leftDepth = calculateTreeDepth(rootNode.getLeft());
         int rightDepth = calculateTreeDepth(rootNode.getRight());
-
         return Math.max(leftDepth, rightDepth) + 1;
     }
 
@@ -208,11 +200,9 @@ public class BinaryTree<T extends Comparable<T>> implements IBinaryTree<T> {
         if (rootNode == null || nodeElement == null) {
             return null;
         }
-
         if (rootNode.getValue().compareTo((T) nodeElement) == 0) {
             return 0;
         }
-
         if (rootNode.getValue().compareTo(nodeElement) < 0) {
             if (rootNode.getRight() != null) {
                 if (calculateNodeLevel(rootNode.getRight(), nodeElement) == null) {
@@ -222,7 +212,6 @@ public class BinaryTree<T extends Comparable<T>> implements IBinaryTree<T> {
                 }
             }
         }
-
         if (rootNode.getValue().compareTo(nodeElement) > 0) {
             if (rootNode.getLeft() != null) {
                 if (calculateNodeLevel(rootNode.getLeft(), nodeElement) == null) {
@@ -232,7 +221,6 @@ public class BinaryTree<T extends Comparable<T>> implements IBinaryTree<T> {
                 }
             }
         }
-
         return null;
     }
 
@@ -247,7 +235,6 @@ public class BinaryTree<T extends Comparable<T>> implements IBinaryTree<T> {
         }
 
         StringBuilder result = new StringBuilder();
-
         result.append(rootNode.getValue() + " ");
 
         String leftStr = toString(rootNode.getLeft());
@@ -272,7 +259,6 @@ public class BinaryTree<T extends Comparable<T>> implements IBinaryTree<T> {
             if (result.substring(result.length() - 2).equals(") ")) {
                 result.delete(result.length() - 1, result.length());
             }
-
             result.append(")");
         }
 
