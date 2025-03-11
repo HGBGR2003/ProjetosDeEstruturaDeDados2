@@ -89,6 +89,7 @@ public class BinaryTree<T extends Comparable<T>> implements IBinaryTree<T> {
         if (rootNode == null) {
             throw new UnsupportedOperationException("Não é possível remover o item, pois a árvore está vazia.");
         }
+        
         if (nodeElement.compareTo(rootNode.getValue()) < 0) {
             rootNode.setLeft(remove(rootNode.getLeft(), nodeElement));
         } else if (nodeElement.compareTo(rootNode.getValue()) > 0) {
