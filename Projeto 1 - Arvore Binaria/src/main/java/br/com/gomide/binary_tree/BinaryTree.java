@@ -17,13 +17,26 @@ public class BinaryTree<T extends Comparable<T>> implements IBinaryTree<T> {
         node = createTree(elements[0]);
 
         for (int i = 1; i < elements.length; i++) {
-            insert(node, elements[i]);
+            try {
+                if (elements[i] == null) {
+                    throw new NullPointerException();
+                }
+                insert(node, elements[i]);
+            }catch (NullPointerException e) {
+                System.out.println("Valores Nulos foram encontrados, não é possivel atribuir valores nulos a arvore binaria");
+                return null;
+            }
         }
         return node;
     }
 
     @Override
     public Integer degree(Node<T> rootNode, T nodeElement) {
+
+        if (rootNode == null || nodeElement == null) {
+            return null;
+            
+        }
 
         if (rootNode.getValue().compareTo(nodeElement) == 0) {
             if (rootNode.getLeft() != null && rootNode.getRight() != null) {
@@ -59,70 +72,83 @@ public class BinaryTree<T extends Comparable<T>> implements IBinaryTree<T> {
 
     @Override
     public void insert(Node<T> rootNode, T element) {
-        if (rootNode.getValue() == null) {
-            createTree(element);
+
+        try{
+
+            if (rootNode.getValue() == null) {
+                createTree(element);
+            }
+    
+            if (element.compareTo((T) rootNode.getValue()) > 0) {
+                if (rootNode.getRight() == null) {
+                    Node<T> node = new Node<T>();
+                    node.setValue(element);
+                    rootNode.setRight(node);
+                } else {
+                    insert(rootNode.getRight(), element);
+                }
+            }
+    
+            if (element.compareTo(rootNode.getValue()) < 0) {
+                if (rootNode.getLeft() == null) {
+                    Node<T> node = new Node<>();
+                    node.setValue(element);
+                    rootNode.setLeft(node);
+                } else {
+                    insert(rootNode.getLeft(), element);
+                }
+            }
+            
+        }catch(NullPointerException e){
+            System.out.println("Valores Nulos");
         }
 
-        if (element.compareTo((T) rootNode.getValue()) > 0) {
-            if (rootNode.getRight() == null) {
-                Node<T> node = new Node<T>();
-                node.setValue(element);
-                rootNode.setRight(node);
-            } else {
-                insert(rootNode.getRight(), element);
-            }
-        }
-
-        if (element.compareTo(rootNode.getValue()) < 0) {
-            if (rootNode.getLeft() == null) {
-                Node<T> node = new Node<>();
-                node.setValue(element);
-                rootNode.setLeft(node);
-            } else {
-                insert(rootNode.getLeft(), element);
-            }
-        }
     }
 
     @Override
     public Node<T> remove(Node<T> rootNode, T nodeElement) {
-        if (rootNode == null) {
-            throw new UnsupportedOperationException("Não é possível remover o item, pois a árvore está vazia.");
-        }
         
-        if (nodeElement.compareTo(rootNode.getValue()) < 0) {
-            rootNode.setLeft(remove(rootNode.getLeft(), nodeElement));
-        } else if (nodeElement.compareTo(rootNode.getValue()) > 0) {
-            rootNode.setRight(remove(rootNode.getRight(), nodeElement));
-        } else {
-            if (rootNode.getLeft() == null && rootNode.getRight() == null) {
-                return null;
+        try {
+            if (rootNode == null || nodeElement == null) {
+                throw new NullPointerException();
             }
-            if (rootNode.getLeft() == null) {
-                return rootNode.getRight();
-            } else if (rootNode.getRight() == null) {
-                return rootNode.getLeft();
-            }
-            Node<T> successor = rootNode.getRight();
-            rootNode.setValue(successor.getValue());
-            rootNode.setRight(remove(rootNode.getRight(), successor.getValue()));
-            if (rootNode.getRight() != null && rootNode.getValue() != null &&
-                rootNode.getRight().getValue() != null &&
-                rootNode.getValue().compareTo(rootNode.getRight().getValue()) > 0) {
-                Node<T> leftTree = rootNode.getRight();
-                if (rootNode.getLeft() != null) {
-                    leftTree.setLeft(rootNode.getLeft());
+            
+            if (nodeElement.compareTo(rootNode.getValue()) < 0) {
+                rootNode.setLeft(remove(rootNode.getLeft(), nodeElement));
+            } else if (nodeElement.compareTo(rootNode.getValue()) > 0) {
+                rootNode.setRight(remove(rootNode.getRight(), nodeElement));
+            } else {
+                if (rootNode.getLeft() == null && rootNode.getRight() == null) {
+                    return null;
                 }
-                rootNode.setRight(null);
-                rootNode.setLeft(leftTree);
-            }
+                if (rootNode.getLeft() == null) {
+                    return rootNode.getRight();
+                } else if (rootNode.getRight() == null) {
+                    return rootNode.getLeft();
+                }
+                Node<T> successor = rootNode.getRight();
+                rootNode.setValue(successor.getValue());
+                rootNode.setRight(remove(rootNode.getRight(), successor.getValue()));
+                if (rootNode.getRight() != null && rootNode.getValue() != null &&
+                    rootNode.getRight().getValue() != null &&
+                    rootNode.getValue().compareTo(rootNode.getRight().getValue()) > 0) {
+                    Node<T> leftTree = rootNode.getRight();
+                    if (rootNode.getLeft() != null) {
+                        leftTree.setLeft(rootNode.getLeft());
+                    }
+                    rootNode.setRight(null);
+                    rootNode.setLeft(leftTree);
+                }
+            }  
+        } catch (NullPointerException e) {
+           System.out.println("Não é possível remover o item, pois a árvore está vazia ou item null.");
         }
         return rootNode;
     }
 
     @Override
     public Node<T> getFather(Node<T> rootNode, T nodeElement) {
-        if (rootNode == null) {
+        if (rootNode == null || nodeElement == null) {
             return null;
         }
 
@@ -142,6 +168,12 @@ public class BinaryTree<T extends Comparable<T>> implements IBinaryTree<T> {
 
     @Override
     public Node<T> getBrother(Node<T> rootNode, T nodeElement) {
+
+        if (rootNode == null || nodeElement == null) {
+            return null;
+            
+        }
+
         if (rootNode.getValue().compareTo((T) nodeElement) < 0) {
             if (rootNode.getRight() != null) {
                 if (rootNode.getRight().getValue().compareTo((T) nodeElement) == 0) {
@@ -165,6 +197,11 @@ public class BinaryTree<T extends Comparable<T>> implements IBinaryTree<T> {
 
     @Override
     public Node<T> getByElement(Node<T> rootNode, T element) {
+
+        if (rootNode == null || element == null) {
+            return null;
+        }
+
         if (rootNode.getValue().compareTo((T) element) < 0) {
             if (rootNode.getRight() != null)
                 return getByElement(rootNode.getRight(), element);
