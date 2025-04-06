@@ -9,7 +9,7 @@ import br.com.gomide.hashing.service.HashList;
 
 public class Principal {
     public static void main(String[] args) {
-        int referenciaTabela = 2;
+        int referenciaTabela = 15;
         Scanner sc = new Scanner(System.in);
         HashTable<Aluno> tabela = new HashTable<>(referenciaTabela);
         HashList<Aluno> hashList = new HashList<>();
