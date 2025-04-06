@@ -16,7 +16,7 @@ public class Aluno implements Comparable<Aluno> {
     }
 
     public float getNotaAluno() {
-        return notaAluno;
+        return this.notaAluno;
     }
 
     public void setNotaAluno(float notaAluno) {
@@ -24,7 +24,7 @@ public class Aluno implements Comparable<Aluno> {
     }
 
     public int getCodigoAluno() {
-        return codigoAluno;
+        return this.codigoAluno;
     }
 
     public void setCodigoAluno(int codigoAluno) {
@@ -32,7 +32,7 @@ public class Aluno implements Comparable<Aluno> {
     }
 
     public String getNomeAluno() {
-        return nomeAluno;
+        return this.nomeAluno;
     }
 
     public void setNomeAluno(String nomeAluno) {
@@ -54,5 +54,9 @@ public class Aluno implements Comparable<Aluno> {
     @Override
     public int compareTo(Aluno o) {
         return Integer.compare(this.codigoAluno, o.codigoAluno);
+    }
+
+    public static float compareNotas(Aluno o, float notaReferencia) {
+        return Float.compare(o.notaAluno, notaReferencia);
     }
 }

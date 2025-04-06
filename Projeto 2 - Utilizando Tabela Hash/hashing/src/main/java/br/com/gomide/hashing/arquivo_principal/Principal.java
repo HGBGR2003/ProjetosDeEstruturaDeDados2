@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 import br.com.gomide.hashing.model.HashTable;
 import br.com.gomide.hashing.model.Node;
+import br.com.gomide.hashing.model.NodeStatus;
 import br.com.gomide.hashing.service.HashList;
 
 public class Principal {
@@ -11,8 +12,9 @@ public class Principal {
         Scanner sc = new Scanner(System.in);
         HashTable<Aluno> tabela = new HashTable<>(15);
         HashList<Aluno> hashList = new HashList<>();
+        float referencia = 7F;
 
-        int opcao;
+        int opcao = 0;
 
         do {
             System.out.println("\nMenu:");
@@ -21,56 +23,106 @@ public class Principal {
             System.out.println("3 - Consultar todos os alunos");
             System.out.println("4 - Sair");
             System.out.print("Opção: ");
-            opcao = sc.nextInt();
-            sc.nextLine();
+            try{
+                opcao = sc.nextInt();
+                sc.nextLine();
+            }catch (Exception e){
+                System.out.println("Opção de seleção inválida!");
+                System.out.println("Só valores numéricos são permitidos aqui!");
+                opcao = 4;
+            }
 
-            switch (opcao) {
-                case 1:
-                    System.out.print("Código: ");
-                    int codigo = sc.nextInt();
-                    sc.nextLine();
-                    System.out.print("Nome: ");
-                    String nome = sc.nextLine();
-                    System.out.print("Nota Final: ");
-                    double nota = sc.nextDouble();
-
-                    Aluno aluno = new Aluno(nome, codigo, (float) nota);
-                    hashList.insert(tabela, aluno);
-                    System.out.println("Aluno cadastrado!");
-                    break;
-
-                case 2:
-                    System.out.println("Alunos aprovados:");
-                    for (int i = 0; i < 15; i++) {
-                        Node<Aluno> node = tabela.getItems().get(i);
-                        System.out.println(node);
-                        while (node != null && node.getValue() != null) {
-                            Aluno a = node.getValue();
-                            if ((float) a.getNotaAluno() >= 7.0F) {
-                                System.out.println(a);
+            if(opcao != 0){
+                switch (opcao) {
+                    case 1:
+                        try{
+                            System.out.print("Código: ");
+                            int codigo;
+                            try{
+                                codigo = sc.nextInt();
+                                sc.nextLine();
+                            } catch (Exception e) {
+                                throw new IllegalArgumentException("São aceitos valores inteiros como código!");
                             }
-                            node = node.getNext();
+                            System.out.print("Nome: ");
+                            String nome;
+                            try{
+                                nome = sc.nextLine();
+                                if (!nome.isEmpty() && (!Character.isLetter(nome.charAt(0)) || !Character.isLetter(nome.charAt(1)))) {
+                                    throw new Exception();
+                                }
+                            } catch (Exception e) {
+                                throw new IllegalArgumentException("Nomes devem começar com pelo menos 2 letras!");
+                            }
+                            System.out.print("Nota Final: ");
+                            double nota;
+                            try{
+                                nota = sc.nextDouble();
+                            } catch (Exception e) {
+                                throw new IllegalArgumentException("São aceitos valores numéricos como nota!");
+                            }
+
+                            Aluno aluno = new Aluno(nome, codigo, (float) nota);
+                            hashList.insert(tabela, aluno);
+
+                            int index = aluno.hashCode() % tabela.getItems().size();
+                            Node<Aluno> nodeParaAtualizarStatus = tabela.getItems().get(index);
+
+                            if (nodeParaAtualizarStatus != null && nodeParaAtualizarStatus.getValue() != null) {
+                                nodeParaAtualizarStatus.setStatus(NodeStatus.BUSY);
+                            }
+
+                            System.out.println("Aluno cadastrado!");
+                        } catch (Exception e) {
+                            System.out.println(e.getMessage());
+                            System.out.println("Tente novamente mais tarde! Encerrando a aplicação...");
+                            opcao = 4;
                         }
-                    }
-                    break;
 
-                case 3:
-                    System.out.println("Todos os alunos:");
-                    for (int i = 0; i < 15; i++) {
-                        Node<Aluno> node = tabela.getItems().get(i);
-                        while (node != null && node.getValue() != null) {
-                            System.out.println(node.getValue());
-                            node = node.getNext();
+                        break;
+
+                    case 2:
+                        int contador = 0;
+                        System.out.println("Alunos aprovados:");
+                        for (int i = 0; i < 15; i++) {
+                            Node<Aluno> node = tabela.getItems().get(i);
+                            while (node != null && node.getValue() != null) {
+                                Aluno a = node.getValue();
+                                if (Aluno.compareNotas(a, referencia) >= 0) {
+                                    contador++;
+                                    System.out.print(a.getCodigoAluno() + "\t " + a.getNomeAluno() + "\t " + a.getNotaAluno());
+                                }
+                                node = node.getNext();
+                            }
                         }
-                    }
-                    break;
+                        if (contador == 0){
+                            System.out.println("Não há alunos para mostrar aqui!");
+                        }
+                        break;
 
-                case 4:
-                    System.out.println("Encerrando programa...");
-                    break;
+                    case 3:
+                        int contadorAlunos = 0;
+                        System.out.println("Todos os alunos:");
+                        for (int i = 0; i < 15; i++) {
+                            Node<Aluno> node = tabela.getItems().get(i);
+                            while (node != null && node.getValue() != null) {
+                                contadorAlunos++;
+                                System.out.println(node.getValue());
+                                node = node.getNext();
+                            }
+                        }
+                        if(contadorAlunos == 0){
+                            System.out.println("Não há alunos para mostrar aqui!");
+                        }
+                        break;
 
-                default:
-                    System.out.println("Opção inválida!");
+                    case 4:
+                        System.out.println("Encerrando programa...");
+                        break;
+
+                    default:
+                        System.out.println("Opção inválida!");
+                }
             }
 
         } while (opcao != 4);
