@@ -46,7 +46,7 @@ public class Principal {
                         System.out.println(node);
                         while (node != null && node.getValue() != null) {
                             Aluno a = node.getValue();
-                            if (a.getNotaAluno() >= 7.0) {
+                            if ((float) a.getNotaAluno() >= 7.0F) {
                                 System.out.println(a);
                             }
                             node = node.getNext();

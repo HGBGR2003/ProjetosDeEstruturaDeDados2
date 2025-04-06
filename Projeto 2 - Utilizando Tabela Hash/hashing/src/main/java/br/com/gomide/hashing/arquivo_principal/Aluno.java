@@ -48,7 +48,7 @@ public class Aluno implements Comparable<Aluno> {
 
     @Override
     public String toString() {
-        return String.format("Aluno{codigo=%d, nome='%s', nota=%.2f}", nomeAluno, codigoAluno, notaAluno);
+        return String.format("Aluno{nome='%s', codigo='%d', nota=%.2f}", nomeAluno, codigoAluno, notaAluno);
     }
 
     @Override
