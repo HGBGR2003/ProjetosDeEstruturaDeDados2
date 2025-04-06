@@ -1,6 +1,6 @@
 package br.com.gomide.hashing.arquivo_principal;
 
-public class Aluno {
+public class Aluno implements Comparable<Aluno> {
     private String nomeAluno;
     private int codigoAluno;
     private float notaAluno;
@@ -39,4 +39,20 @@ public class Aluno {
         this.nomeAluno = nomeAluno;
     }
 
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (!(obj instanceof Aluno)) return false;
+        Aluno other = (Aluno) obj;
+        return this.codigoAluno == other.codigoAluno;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("Aluno{codigo=%d, nome='%s', nota=%.2f}", nomeAluno, codigoAluno, notaAluno);
+    }
+
+    @Override
+    public int compareTo(Aluno o) {
+        return Integer.compare(this.codigoAluno, o.codigoAluno);
+    }
 }

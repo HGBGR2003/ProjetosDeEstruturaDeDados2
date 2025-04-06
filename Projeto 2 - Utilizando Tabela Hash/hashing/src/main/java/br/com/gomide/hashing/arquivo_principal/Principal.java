@@ -1,59 +1,80 @@
 package br.com.gomide.hashing.arquivo_principal;
 
-import java.util.ArrayList;
+
+import java.util.List;
 import java.util.Scanner;
+
+import br.com.gomide.hashing.model.HashTable;
+import br.com.gomide.hashing.service.HashList;
 
 public class Principal {
     public static void main(String[] args) {
-        ArrayList listaDeAlunos = new ArrayList<Aluno>();
-        Scanner impressora = new Scanner(System.in);
-        boolean continuar = true;
+        Scanner sc = new Scanner(System.in);
+        HashTable<Aluno> tabela = new HashTable<>(15);
+        HashList<Aluno> hashList = new HashList<>();
+        int opcao;
 
-        for (int i = 0; i < 15; i++) {
-            Aluno alunoPrin = new Aluno();
-            listaDeAlunos.add(alunoPrin);
-        }
-
-        while (continuar) {
-            System.out.println("Escolha uma opção:\n");
-            System.out.println("1 - Cadastrar Aluno");
-            System.out.println("2 - Consultar Aprovados");
-            System.out.println("3 - Consultar Todos os Alunos");
+        do {
+            System.out.println("\nMenu:");
+            System.out.println("1 - Cadastrar aluno");
+            System.out.println("2 - Consultar aprovados");
+            System.out.println("3 - Consultar todos os alunos");
             System.out.println("4 - Sair");
-            int opcao = impressora.nextInt();
+            System.out.print("Opção: ");
+            opcao = sc.nextInt();
+            sc.nextLine(); 
+
             switch (opcao) {
                 case 1:
-                    System.out.println("Digite o nome do aluno:");
-                    String nome = impressora.next();
-                    System.out.println("Digite o código do aluno:");
-                    int codigo = impressora.nextInt();
-                    System.out.println("Digite a nota do aluno:");
-                    float nota = impressora.nextFloat();
+                    System.out.print("Código: ");
+                    int codigo = sc.nextInt();
+                    sc.nextLine();
+                    System.out.print("Nome: ");
+                    String nome = sc.nextLine();
+                    System.out.print("Nota Final: ");
+                    double nota = sc.nextDouble();
 
-                    Aluno aluno = new Aluno(nome, codigo, nota);
-                    listaDeAlunos.add(aluno);
+                    Aluno aluno = new Aluno(nome,codigo, (float) nota);
+                    hashList.insert(tabela, aluno);
+                    System.out.println("Aluno cadastrado!");
                     break;
+
                 case 2:
-                    for (int i = 0; i < listaDeAlunos.size(); i++) {
-                        Aluno alunoAprovado = (Aluno) listaDeAlunos.get(i);
-                        if (alunoAprovado.getNotaAluno() >= 7) {
-                            System.out.println("Nome: " + alunoAprovado.getNomeAluno() + ", Código: " + alunoAprovado.getCodigoAluno() + ", Nota: " + alunoAprovado.getNotaAluno());
+                    System.out.println("Alunos aprovados:");
+                    for (int i = 0; i < 15; i++) {
+                       Node<Aluno> node = (Node <Aluno>) tabela.getItems().get(i);
+                        while (node != null && node.get(i) != null) {
+                            Aluno a = node.getValue();
+                            if (a.getNotaFinal() >= 7.0) {
+                                System.out.println(a);
+                            }
+                            node = node.getNext();
                         }
                     }
                     break;
+
                 case 3:
-                    for (int i = 0; i < listaDeAlunos.size(); i++) {
-                        Aluno alunoTodos = (Aluno) listaDeAlunos.get(i);
-                        System.out.println("Nome: " + alunoTodos.getNomeAluno() + ", Código: " + alunoTodos.getCodigoAluno() + ", Nota: " + alunoTodos.getNotaAluno());
+                    System.out.println("Todos os alunos:");
+                    for (int i = 0; i < 15; i++) {
+                        Node<Aluno> node = tabela.getItems().get(i);
+                        while (node != null && node.getValue() != null) {
+                            System.out.println(node.getValue());
+                            node = node.getNext();
+                        }
                     }
                     break;
-                case 4:
-                    continuar = false;
-                    break;
-                default:
-                    System.out.println("Opção inválida. Tente novamente.");
-            }
-        }
 
+                case 4:
+                    System.out.println("Encerrando programa...");
+                    break;
+
+                default:
+                    System.out.println("Opção inválida!");
+            }
+
+        } while (opcao != 4);
+
+        sc.close();
     }
 }
+
