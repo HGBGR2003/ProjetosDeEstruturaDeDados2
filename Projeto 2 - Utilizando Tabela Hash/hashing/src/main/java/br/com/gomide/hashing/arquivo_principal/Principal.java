@@ -104,7 +104,7 @@ public class Principal {
                                 Aluno a = node.getValue();
                                 if (Aluno.compareNotas(a, referencia) >= 0) {
                                     contador++;
-                                    System.out.print(a.getCodigoAluno() + "\t " + a.getNomeAluno() + "\t " + a.getNotaAluno());
+                                    System.out.print(a.getCodigoAluno() + "\t " + a.getNomeAluno() + "\t " + a.getNotaAluno() + "\n");
                                 }
                                 node = node.getNext();
                             }
@@ -115,11 +115,11 @@ public class Principal {
                         break;
 
                     case 3:
-                        System.out.println(hashList.toString(tabela));
+                        System.out.println(hashList.toString(tabela).replaceAll("\\[", "\n["));
                         break;
 
                     case 4:
-                        System.out.println("Encerrando programa...");
+                        System.out.println("Encerrando programa...\n");
                         break;
 
                     default:
