@@ -61,6 +61,10 @@ public class Principal {
                                 double nota;
                                 try{
                                     nota = sc.nextDouble();
+                                    if (nota > 10 || nota < 0) {
+                                        throw new Exception("A nota deve ficar entre 0 e 10.");
+                                        
+                                    }
                                 } catch (Exception e) {
                                     throw new IllegalArgumentException("São aceitos valores numéricos como nota!");
                                 }
@@ -111,19 +115,7 @@ public class Principal {
                         break;
 
                     case 3:
-                        int contadorAlunos = 0;
-                        System.out.println("Todos os alunos:");
-                        for (int i = 0; i < 15; i++) {
-                            Node<Aluno> node = tabela.getItems().get(i);
-                            while (node != null && node.getValue() != null) {
-                                contadorAlunos++;
-                                System.out.println(node.getValue());
-                                node = node.getNext();
-                            }
-                        }
-                        if (contadorAlunos == 0) {
-                            System.out.println("Não há alunos para mostrar aqui!");
-                        }
+                        System.out.println(hashList.toString(tabela));
                         break;
 
                     case 4:
