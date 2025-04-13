@@ -1,5 +1,7 @@
 package br.com.gomide.hashing.arquivo_principal;
 
+//Dupla do Trabalho: Henrique Gabriel Barbosa Guida Rodrigues e Matheus Guerra Martins.
+
 import java.util.Scanner;
 
 import br.com.gomide.hashing.model.HashTable;
@@ -41,7 +43,7 @@ public class Principal {
                             if (adicoesFeitas < referenciaTabela) {
                                 System.out.print("Código: ");
                                 int codigo;
-                                try{
+                                try {
                                     codigo = sc.nextInt();
                                     sc.nextLine();
                                 } catch (Exception e) {
@@ -49,9 +51,10 @@ public class Principal {
                                 }
                                 System.out.print("Nome: ");
                                 String nome;
-                                try{
+                                try {
                                     nome = sc.nextLine();
-                                    if (!nome.isEmpty() && (!Character.isLetter(nome.charAt(0)) || !Character.isLetter(nome.charAt(1)))) {
+                                    if (!nome.isEmpty() && (!Character.isLetter(nome.charAt(0))
+                                            || !Character.isLetter(nome.charAt(1)))) {
                                         throw new Exception();
                                     }
                                 } catch (Exception e) {
@@ -59,11 +62,11 @@ public class Principal {
                                 }
                                 System.out.print("Nota Final: ");
                                 double nota;
-                                try{
+                                try {
                                     nota = sc.nextDouble();
                                     if (nota > 10 || nota < 0) {
                                         throw new Exception("A nota deve ficar entre 0 e 10.");
-                                        
+
                                     }
                                 } catch (Exception e) {
                                     throw new IllegalArgumentException("São aceitos valores numéricos como nota!");
@@ -81,9 +84,10 @@ public class Principal {
                                 adicoesFeitas++;
                                 System.out.println("Aluno cadastrado!");
                             } else {
-                                throw new StackOverflowError("Número máximo de alunos atingido! Não é possível inserir mais alunos!");
+                                throw new StackOverflowError(
+                                        "Número máximo de alunos atingido! Não é possível inserir mais alunos!");
                             }
-                        } catch (StackOverflowError es){
+                        } catch (StackOverflowError es) {
                             System.out.println(es.getMessage());
                             System.out.println("Tente novamente mais tarde! Encerrando a aplicação...");
                             opcao = 4;
@@ -104,7 +108,8 @@ public class Principal {
                                 Aluno a = node.getValue();
                                 if (Aluno.compareNotas(a, referencia) >= 0) {
                                     contador++;
-                                    System.out.print(a.getCodigoAluno() + "\t " + a.getNomeAluno() + "\t " + a.getNotaAluno() + "\n");
+                                    System.out.print(a.getCodigoAluno() + "\t " + a.getNomeAluno() + "\t "
+                                            + a.getNotaAluno() + "\n");
                                 }
                                 node = node.getNext();
                             }
@@ -132,4 +137,3 @@ public class Principal {
         sc.close();
     }
 }
-
