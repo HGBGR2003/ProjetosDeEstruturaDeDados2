@@ -1,12 +1,18 @@
+// package org.henrique.matheus;
 
-import org.junit.jupiter.api.*;
+import org.henrique.matheus.AdjacencyListGraph;
+import org.henrique.matheus.Graph;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
-import java.util.*;
+
+import java.util.Arrays;
+import java.util.List;
 
 public class GraphTest {
     private Graph<String> graph;
 
-    // @BeforeEach
+    @BeforeEach
     void setUp() {
         graph = new AdjacencyListGraph<>();
     }
@@ -19,7 +25,6 @@ public class GraphTest {
         assertEquals(1, graph.degreeOf("A"));
         assertEquals(1, graph.degreeOf("B"));
     }
-
 
     @Test
     void testCountSelfLoops() {
@@ -38,9 +43,8 @@ public class GraphTest {
         graph.addEdge("2", "3");
         assertTrue(graph.isComplete());
         graph.addVertex("4");
-        assertTrue(graph.isComplete());
+        assertFalse(graph.isComplete());
     }
-
 
     @Test
     void testDegreeOfWithSelfLoop() {
@@ -76,13 +80,4 @@ public class GraphTest {
         assertTrue(dot.contains("\"A\" -- \"B\""));
         assertTrue(dot.startsWith("graph G"));
     }
-}
-
-private void assertEquals(int i, int path) {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'assertEquals'");
-}
-private void assertTrue(boolean complete) {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'assertTrue'");
 }
