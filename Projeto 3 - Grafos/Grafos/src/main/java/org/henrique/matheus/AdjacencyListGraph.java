@@ -85,7 +85,7 @@ public class AdjacencyListGraph<V> implements Graph<V> {
         if (!prev.containsKey(to)) {
             return Collections.emptyList();
         }
-        List<V> path = new LinkedList<>();
+        LinkedList<V> path = new LinkedList<>();
         for (V at = to; at != null; at = prev.get(at)) {
             path.addFirst(at);
         }

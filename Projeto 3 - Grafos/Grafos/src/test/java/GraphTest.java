@@ -1,5 +1,3 @@
-// package org.henrique.matheus;
-
 import org.henrique.matheus.AdjacencyListGraph;
 import org.henrique.matheus.Graph;
 import org.junit.jupiter.api.BeforeEach;
