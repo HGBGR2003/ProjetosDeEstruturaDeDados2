@@ -87,10 +87,10 @@ public class GraphTest {
     @Test
     void testAddDuplicateVertexAndEdge() {
         graph.addVertex("A");
-        graph.addVertex("A");              // não deve lançar
+        graph.addVertex("A");
         graph.addVertex("B");
         graph.addEdge("A", "B");
-        graph.addEdge("A", "B");           // idem
+        graph.addEdge("A", "B");
         assertEquals(1, graph.degreeOf("A"));
         assertEquals(1, graph.degreeOf("B"));
     }

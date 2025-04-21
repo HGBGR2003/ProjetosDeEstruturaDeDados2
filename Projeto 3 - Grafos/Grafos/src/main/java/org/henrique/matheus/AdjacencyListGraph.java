@@ -13,9 +13,11 @@ public class AdjacencyListGraph<V> implements Graph<V> {
         if (!adj.containsKey(u) || !adj.containsKey(v)) {
             throw new IllegalArgumentException("Vertex not found: " + u + " or " + v);
         }
-        adj.get(u).add(v);
-        if (!u.equals(v)) {
-            adj.get(v).add(u);
+        if (!adj.get(u).contains(v)) {
+            adj.get(u).add(v);
+            if (!u.equals(v)) {
+                adj.get(v).add(u);
+            }
         }
     }
 
