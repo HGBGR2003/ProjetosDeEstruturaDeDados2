@@ -78,4 +78,26 @@ public class GraphTest {
         assertTrue(dot.contains("\"A\" -- \"B\""));
         assertTrue(dot.startsWith("graph G"));
     }
+
+    @Test
+    void testDegreeOfIsolated() {
+        graph.addVertex("Z");
+        assertEquals(0, graph.degreeOf("Z"));
+    }
+    @Test
+    void testAddDuplicateVertexAndEdge() {
+        graph.addVertex("A");
+        graph.addVertex("A");              // não deve lançar
+        graph.addVertex("B");
+        graph.addEdge("A", "B");
+        graph.addEdge("A", "B");           // idem
+        assertEquals(1, graph.degreeOf("A"));
+        assertEquals(1, graph.degreeOf("B"));
+    }
+    @Test
+    void testAddEdgeMissingVertex() {
+        graph.addVertex("A");
+        assertThrows(IllegalArgumentException.class,
+                () -> graph.addEdge("A", "X"));
+    }
 }
