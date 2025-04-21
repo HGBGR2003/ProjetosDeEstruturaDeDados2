@@ -1,4 +1,7 @@
 package org.henrique.matheus;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.*;
 public class AdjacencyListGraph<V> implements Graph<V> {
     private final Map<V, List<V>> adj = new HashMap<>();
@@ -122,6 +125,19 @@ public class AdjacencyListGraph<V> implements Graph<V> {
             }
         }
         sb.append("}\n");
+        String dot = sb.toString();
+        saveInFile(sb.toString(), "dot.txt");
         return sb.toString();
     }
+
+    private static void saveInFile(String dot, String fileName) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileName))) {
+            writer.write(dot);
+            writer.newLine();
+            System.out.println("Dot salvo com sucesso em: " + fileName);
+        } catch (IOException e) {
+            System.out.println("Erro ao salvar o dot: " + e.getMessage());
+        }
+    }
+
 }
