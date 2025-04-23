@@ -126,7 +126,7 @@ public class AdjacencyListGraph<V> implements Graph<V> {
         }
         sb.append("}\n");
         String dot = sb.toString();
-        saveInFile(sb.toString(), "dot.txt");
+        saveInFile(dot, "dot.txt");
         return sb.toString();
     }
 
