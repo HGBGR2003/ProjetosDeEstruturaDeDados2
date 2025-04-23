@@ -1,6 +1,7 @@
 import org.henrique.matheus.AdjacencyListGraph;
 import org.henrique.matheus.Graph;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -100,4 +101,25 @@ public class GraphTest {
         assertThrows(IllegalArgumentException.class,
                 () -> graph.addEdge("A", "X"));
     }
+
+    @Test
+    @DisplayName ("Verificação com um grafo de 5 vértices.")
+    void testIsDone(){
+        graph.addVertex("A");
+        graph.addVertex("B");
+        graph.addVertex("C");
+        graph.addVertex("D");
+        graph.addVertex("E");
+        graph.addEdge("A", "B");
+        graph.addEdge("B", "C");
+        graph.addEdge("C", "E");
+        assertTrue(graph.isComplete()); 
+    }
+
+    @Test
+    @DisplayName ("Exemplo de verificação do caminho de um vertice.")
+    void pathDone(){
+        //Continuo depois.
+    }
+
 }
