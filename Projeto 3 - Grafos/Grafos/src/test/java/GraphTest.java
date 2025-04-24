@@ -112,14 +112,52 @@ public class GraphTest {
         graph.addVertex("E");
         graph.addEdge("A", "B");
         graph.addEdge("B", "C");
+        graph.addEdge("C", "D");
+        graph.addEdge("D", "E");
+        assertFalse(graph.isComplete());
+
+        graph.addEdge("A", "C");
+        graph.addEdge("A", "D");
+        graph.addEdge("A", "E");
+        graph.addEdge("B", "D");
+        graph.addEdge("B", "E");
         graph.addEdge("C", "E");
+
         assertTrue(graph.isComplete()); 
     }
 
+    
     @Test
     @DisplayName ("Exemplo de verificação do caminho de um vertice.")
     void pathDone(){
-        //Continuo depois.
+
+    for (int i = 1; i <= 15; i++) {
+        graph.addVertex("V" + i);
+    }
+
+    graph.addEdge("V1", "V2");
+    graph.addEdge("V2", "V3");
+    graph.addEdge("V3", "V4");
+    graph.addEdge("V4", "V5");
+    graph.addEdge("V5", "V6");
+    graph.addEdge("V6", "V7");
+    graph.addEdge("V7", "V8");
+    graph.addEdge("V8", "V9");
+    graph.addEdge("V9", "V10");
+    graph.addEdge("V10", "V11");
+    graph.addEdge("V11", "V12");
+    graph.addEdge("V12", "V13");
+    graph.addEdge("V13", "V14");
+    graph.addEdge("V14", "V15");
+
+    List<String> expectedPath = Arrays.asList(
+        "V1", "V2", "V3", "V4", "V5",
+        "V6", "V7", "V8", "V9", "V10",
+        "V11", "V12", "V13", "V14", "V15"
+    );
+
+    List<String> actualPath = graph.findPath("V1", "V15");
+    assertEquals(expectedPath, actualPath);
     }
 
 }
