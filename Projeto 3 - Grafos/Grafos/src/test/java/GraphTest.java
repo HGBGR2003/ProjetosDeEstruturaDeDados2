@@ -160,4 +160,31 @@ public class GraphTest {
     assertEquals(expectedPath, actualPath);
     }
 
+    @Test
+    @DisplayName ("Teste estruturado com o caminho testando, o vazio entre elementos e se existe caminho")
+    void pathDiference(){
+        graph.addVertex("1");
+        graph.addVertex("2");
+        graph.addVertex("3");
+        graph.addVertex("4");
+        graph.addVertex("5");
+        graph.addVertex("6");
+        graph.addVertex("7");
+        graph.addVertex("8");
+        
+        graph.addEdge("1", "2");
+        graph.addEdge("2", "3");
+        graph.addEdge("1", "4");
+        graph.addEdge("4", "2");
+        graph.addEdge("5", "2");
+        graph.addEdge("5", "3");
+        graph.addEdge("6", "3");
+
+        graph.addEdge("7", "8");
+
+        List<String> path = graph.findPath("1", "6");
+
+        assertEquals(Arrays.asList("1", "2", "3","6"), path);
+    }
+
 }
