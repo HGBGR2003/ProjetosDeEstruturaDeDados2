@@ -42,9 +42,7 @@ public class AdjacencyListGraph<V> implements Graph<V> {
         for (Map.Entry<V, List<V>> entry : adj.entrySet()) {
             V u = entry.getKey();
             Set<V> neighbors = new HashSet<>(entry.getValue());
-            // remove self-loops from neighbor count for completeness check
             neighbors.remove(u);
-            // each vertex should connect to all others
             if (neighbors.size() != n - 1) {
                 return false;
             }
@@ -61,7 +59,6 @@ public class AdjacencyListGraph<V> implements Graph<V> {
         for (V u : adj.get(v)) {
             degree++;
             if (u.equals(v)) {
-                // self-loop contributes an extra degree
                 degree++;
             }
         }
@@ -110,7 +107,7 @@ public class AdjacencyListGraph<V> implements Graph<V> {
             for (V v : entry.getValue()) {
                 String edge;
                 if (u.equals(v)) {
-                    edge = "\"" + u + "\" -- \"" + u + "\""; // self-loop
+                    edge = "\"" + u + "\" -- \"" + u + "\""; 
                 } else {
                     String a = u.toString(), b = v.toString();
                     if (a.compareTo(b) <= 0) {
