@@ -6,7 +6,8 @@ import java.io.IOException;
 import java.util.*;
 
 public class AdjacencyListGraph<V> implements Graph<V> {
-    private final Map<V, List<V>> adj = new HashMap<>();
+    // private final Map<V, List<V>> adj2 = new HashMap<>();
+    private final Map<V, Map <V, Double>> adj = new HashMap<>();
     private final Map<V, Map<V, Double>> museu = new HashMap<>();
 
     @Override
@@ -28,15 +29,15 @@ public class AdjacencyListGraph<V> implements Graph<V> {
     }
 
     @Override
-    public void addEdgeWeight(V u, V v, V w) {
-        if (!adj.containsKey(u) || !adj.containsKey(v)) {
+    public void addEdgeWeight(V u, V v, Double w) {
+        if (!museu.containsKey(u) || !museu.containsKey(v)) {
             throw new IllegalArgumentException("Vertex not found: " + u + " or " + v);
         }
-        if (!adj.get(u).contains(v)) {
-            adj.get(u).add(v);
-            if (!u.equals(v)) {
-                adj.get(v).add(u);
-            }
+
+        museu.get(u).put(v, w);
+
+        if (!u.equals(v)) {
+            museu.get(u).put(v, w);
         }
     }
 

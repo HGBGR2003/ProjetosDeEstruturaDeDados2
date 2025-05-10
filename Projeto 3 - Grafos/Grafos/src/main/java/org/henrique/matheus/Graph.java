@@ -6,7 +6,7 @@ import java.util.List;
 
         void addEdge(V u, V v);
 
-        void addEdgeWeight(V u, V v, V w);
+        void addEdgeWeight(V u, V v, Double w);
 
         int countSelfLoops();
 
