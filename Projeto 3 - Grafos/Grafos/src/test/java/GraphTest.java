@@ -26,6 +26,31 @@ public class GraphTest {
     }
 
     @Test
+    public void testAddEdgeDefaultWeight() {
+        graph.addVertex("A");
+        graph.addVertex("B");
+        graph.addEdge("A", "B");
+
+        String dot = graph.toDot();
+        
+        assertTrue(dot.contains("\"A\" -- \"B\" [label=null]"),
+                   "Aresta A–B deveria ter peso padrão null");
+    }
+
+    @Test
+    public void testAddEdgeWithCustomWeight() {
+        double weight = 2.5;
+        graph.addVertex("A");
+        graph.addVertex("C");
+        graph.addEdgeWeight("A", "C", weight);
+
+        String dot = graph.toDot();
+        
+        assertTrue(dot.contains("\"A\" -- \"C\" [label="+weight+"]"),
+                   "Aresta A–C deveria ter peso "+weight);
+    }
+
+    @Test
     void testCountSelfLoops() {
         graph.addVertex("X");
         graph.addEdge("X", "X");
