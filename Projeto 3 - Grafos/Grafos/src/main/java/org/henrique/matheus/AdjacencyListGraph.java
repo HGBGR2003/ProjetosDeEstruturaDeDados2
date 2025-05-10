@@ -1,10 +1,13 @@
 package org.henrique.matheus;
+
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.*;
+
 public class AdjacencyListGraph<V> implements Graph<V> {
     private final Map<V, List<V>> adj = new HashMap<>();
+    private final Map<V, Map<V, Double>> museu = new HashMap<>();
 
     @Override
     public void addVertex(V v) {
@@ -25,12 +28,26 @@ public class AdjacencyListGraph<V> implements Graph<V> {
     }
 
     @Override
+    public void addEdgeWeight(V u, V v, V w) {
+        if (!adj.containsKey(u) || !adj.containsKey(v)) {
+            throw new IllegalArgumentException("Vertex not found: " + u + " or " + v);
+        }
+        if (!adj.get(u).contains(v)) {
+            adj.get(u).add(v);
+            if (!u.equals(v)) {
+                adj.get(v).add(u);
+            }
+        }
+    }
+
+    @Override
     public int countSelfLoops() {
         int count = 0;
         for (Map.Entry<V, List<V>> entry : adj.entrySet()) {
             V u = entry.getKey();
             for (V v : entry.getValue()) {
-                if (u.equals(v)) count++;
+                if (u.equals(v))
+                    count++;
             }
         }
         return count;
@@ -76,7 +93,8 @@ public class AdjacencyListGraph<V> implements Graph<V> {
         prev.put(from, null);
         while (!queue.isEmpty()) {
             V u = queue.poll();
-            if (u.equals(to)) break;
+            if (u.equals(to))
+                break;
             for (V neigh : adj.get(u)) {
                 if (!prev.containsKey(neigh)) {
                     prev.put(neigh, u);
@@ -107,7 +125,7 @@ public class AdjacencyListGraph<V> implements Graph<V> {
             for (V v : entry.getValue()) {
                 String edge;
                 if (u.equals(v)) {
-                    edge = "\"" + u + "\" -- \"" + u + "\""; 
+                    edge = "\"" + u + "\" -- \"" + u + "\"";
                 } else {
                     String a = u.toString(), b = v.toString();
                     if (a.compareTo(b) <= 0) {
