@@ -16,6 +16,8 @@ import java.util.List;
   
         List<V> findPath(V from, V to);
 
+        String toDigraph();
+
         String toDot();
     }
 

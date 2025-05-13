@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 public class GraphTest {
     private Graph<String> graph;
@@ -32,9 +33,9 @@ public class GraphTest {
         graph.addEdge("A", "B");
 
         String dot = graph.toDot();
-        
+
         assertTrue(dot.contains("\"A\" -- \"B\" [label=null]"),
-                   "Aresta A–B deveria ter peso padrão null");
+                "Aresta A–B deveria ter peso padrão null");
     }
 
     @Test
@@ -45,9 +46,9 @@ public class GraphTest {
         graph.addEdgeWeight("A", "C", weight);
 
         String dot = graph.toDot();
-        
-        assertTrue(dot.contains("\"A\" -- \"C\" [label="+weight+"]"),
-                   "Aresta A–C deveria ter peso "+weight);
+
+        assertTrue(dot.contains("\"A\" -- \"C\" [label=" + weight + "]"),
+                "Aresta A–C deveria ter peso " + weight);
     }
 
     @Test
@@ -110,6 +111,7 @@ public class GraphTest {
         graph.addVertex("Z");
         assertEquals(0, graph.degreeOf("Z"));
     }
+
     @Test
     void testAddDuplicateVertexAndEdge() {
         graph.addVertex("A");
@@ -120,6 +122,7 @@ public class GraphTest {
         assertEquals(1, graph.degreeOf("A"));
         assertEquals(1, graph.degreeOf("B"));
     }
+
     @Test
     void testAddEdgeMissingVertex() {
         graph.addVertex("A");
@@ -128,8 +131,8 @@ public class GraphTest {
     }
 
     @Test
-    @DisplayName ("Verificação com um grafo de 5 vértices.")
-    void testIsDone(){
+    @DisplayName("Verificação com um grafo de 5 vértices.")
+    void testIsDone() {
         graph.addVertex("A");
         graph.addVertex("B");
         graph.addVertex("C");
@@ -148,46 +151,44 @@ public class GraphTest {
         graph.addEdge("B", "E");
         graph.addEdge("C", "E");
 
-        assertTrue(graph.isComplete()); 
-    }
-
-    
-    @Test
-    @DisplayName ("Exemplo de verificação do caminho de um vertice.")
-    void pathDone(){
-
-    for (int i = 1; i <= 15; i++) {
-        graph.addVertex("V" + i);
-    }
-
-    graph.addEdge("V1", "V2");
-    graph.addEdge("V2", "V3");
-    graph.addEdge("V3", "V4");
-    graph.addEdge("V4", "V5");
-    graph.addEdge("V5", "V6");
-    graph.addEdge("V6", "V7");
-    graph.addEdge("V7", "V8");
-    graph.addEdge("V8", "V9");
-    graph.addEdge("V9", "V10");
-    graph.addEdge("V10", "V11");
-    graph.addEdge("V11", "V12");
-    graph.addEdge("V12", "V13");
-    graph.addEdge("V13", "V14");
-    graph.addEdge("V14", "V15");
-
-    List<String> expectedPath = Arrays.asList(
-        "V1", "V2", "V3", "V4", "V5",
-        "V6", "V7", "V8", "V9", "V10",
-        "V11", "V12", "V13", "V14", "V15"
-    );
-
-    List<String> actualPath = graph.findPath("V1", "V15");
-    assertEquals(expectedPath, actualPath);
+        assertTrue(graph.isComplete());
     }
 
     @Test
-    @DisplayName ("Teste estruturado com o caminho testando, o vazio entre elementos e se existe caminho")
-    void pathDiference(){
+    @DisplayName("Exemplo de verificação do caminho de um vertice.")
+    void pathDone() {
+
+        for (int i = 1; i <= 15; i++) {
+            graph.addVertex("V" + i);
+        }
+
+        graph.addEdge("V1", "V2");
+        graph.addEdge("V2", "V3");
+        graph.addEdge("V3", "V4");
+        graph.addEdge("V4", "V5");
+        graph.addEdge("V5", "V6");
+        graph.addEdge("V6", "V7");
+        graph.addEdge("V7", "V8");
+        graph.addEdge("V8", "V9");
+        graph.addEdge("V9", "V10");
+        graph.addEdge("V10", "V11");
+        graph.addEdge("V11", "V12");
+        graph.addEdge("V12", "V13");
+        graph.addEdge("V13", "V14");
+        graph.addEdge("V14", "V15");
+
+        List<String> expectedPath = Arrays.asList(
+                "V1", "V2", "V3", "V4", "V5",
+                "V6", "V7", "V8", "V9", "V10",
+                "V11", "V12", "V13", "V14", "V15");
+
+        List<String> actualPath = graph.findPath("V1", "V15");
+        assertEquals(expectedPath, actualPath);
+    }
+
+    @Test
+    @DisplayName("Teste estruturado com o caminho testando, o vazio entre elementos e se existe caminho")
+    void pathDiference() {
         graph.addVertex("1");
         graph.addVertex("2");
         graph.addVertex("3");
@@ -196,7 +197,7 @@ public class GraphTest {
         graph.addVertex("6");
         graph.addVertex("7");
         graph.addVertex("8");
-        
+
         graph.addEdge("1", "2");
         graph.addEdge("2", "3");
         graph.addEdge("1", "4");
@@ -209,7 +210,59 @@ public class GraphTest {
 
         List<String> path = graph.findPath("1", "6");
 
-        assertEquals(Arrays.asList("1", "2", "3","6"), path);
+        assertEquals(Arrays.asList("1", "2", "3", "6"), path);
+    }
+
+    @Test
+    @DisplayName("Código para achar o menor caminho.")
+    public void testDijkstra() {
+        AdjacencyListGraph<String> graph = new AdjacencyListGraph<>();
+        graph.addVertex("A");
+        graph.addVertex("B");
+        graph.addVertex("C");
+        graph.addVertex("D");
+
+        graph.addEdgeWeight("A", "B", 1.0);
+        graph.addEdgeWeight("B", "C", 2.0);
+        graph.addEdgeWeight("C", "D", 3.0);
+        graph.addEdgeWeight("A", "D", 10.0);
+
+        Map<String, Double> distances = graph.dijkstra("A");
+        assertEquals(0.0, distances.get("A"));
+        assertEquals(1.0, distances.get("B"));
+        assertEquals(3.0, distances.get("C"));
+        assertEquals(6.0, distances.get("D"));
+    }
+
+    @Test
+    public void testNoPath() {
+        AdjacencyListGraph<String> graph = new AdjacencyListGraph<>();
+        graph.addVertex("A");
+        graph.addVertex("B");
+
+        Map<String, Double> distances = graph.dijkstra("A");
+        assertEquals(Double.MAX_VALUE, distances.get("B"));
+    }
+
+    @Test
+    //Verificar o erro.
+    public void testToDigraph() {
+        AdjacencyListGraph<String> graph = new AdjacencyListGraph<>();
+        graph.addVertex("A");
+        graph.addVertex("B");
+        graph.addVertex("C");
+
+        graph.addEdgeWeight("A", "B", 5.0);
+        graph.addEdgeWeight("B", "C", 3.0);
+        
+
+
+        String expectedDot = "digraph G {\n" +
+                "  \"A\" -> \"B\" [label=5.0];\n" +
+                "  \"B\" -> \"C\" [label=3.0];\n" +
+                "}";
+
+        assertEquals(expectedDot.trim(), graph.toDigraph().trim());
     }
 
 }
