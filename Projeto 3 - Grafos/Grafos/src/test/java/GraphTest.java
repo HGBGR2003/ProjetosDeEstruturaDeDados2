@@ -45,6 +45,7 @@ public class GraphTest {
         graph.addVertex("C");
         graph.addEdgeWeight("A", "C", weight);
 
+
         String dot = graph.toDot();
 
         assertTrue(dot.contains("\"A\" -- \"C\" [label=" + weight + "]"),

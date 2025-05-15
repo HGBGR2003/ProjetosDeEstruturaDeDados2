@@ -65,14 +65,10 @@ public class AdjacencyListGraph<V> implements Graph<V> {
         if (!adj.containsKey(u) || !adj.containsKey(v)) {
             throw new IllegalArgumentException("Vertex not found: " + u + " or " + v);
         }
-        // adj.get(u).put(v, w);
-        // if (!u.equals(v)) {
-        //     adj.get(v).put(u, w);
-        // }
         adj.get(u).put(v, w);
-if (!u.equals(v)) {
-    adj.get(v).put(u, w); // Remove essa linha!
-}
+        if (!u.equals(v)) {
+            adj.get(v).put(u, w); 
+        }
 
     }
 
@@ -99,7 +95,7 @@ if (!u.equals(v)) {
                 return false;
             }
         }
-        return true; 
+        return true;
     }
 
     @Override
@@ -190,30 +186,30 @@ if (!u.equals(v)) {
 
     @Override
     public String toDigraph() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("digraph G {\n");
+    StringBuilder sb = new StringBuilder();
+    sb.append("digraph G {\n");
 
-        for (Map.Entry<V, Map<V, Double>> entry : adj.entrySet()) {
-            V u = entry.getKey();
-            Map<V, Double> neighbors = entry.getValue();
+    for (Map.Entry<V, Map<V, Double>> entry : adj.entrySet()) {
+        V u = entry.getKey();
+        Map<V, Double> neighbors = entry.getValue();
 
-            if (neighbors.isEmpty()) {
-                sb.append("  \"").append(u).append("\";\n");
-            }
-
-            for (Map.Entry<V, Double> e : neighbors.entrySet()) {
-                V v = e.getKey();
-                Double w = e.getValue();
-                String edge = "\"" + u + "\" -> \"" + v + "\""; // 
-
-                sb.append("  ").append(edge).append(" [label=").append(w).append("];\n");
-            }
+        if (neighbors.isEmpty()) {
+            sb.append("").append(u).append(";\n");
         }
 
-        sb.append("}\n");
-        String dot = sb.toString();
-        saveInFile(dot, "dot.txt");
-        return dot;
+        for (Map.Entry<V, Double> e : neighbors.entrySet()) {
+            V v = e.getKey();
+            Double w = e.getValue();
+            String edge = u + " -> " + v;
+
+            sb.append("  ").append(edge).append(" [label=").append(w).append("];\n");
+        }
+    }
+
+    sb.append("}\n");
+    String dot = sb.toString();
+    saveInFile(dot, "dot.txt");
+    return dot;
     }
 
     private static void saveInFile(String dot, String fileName) {
