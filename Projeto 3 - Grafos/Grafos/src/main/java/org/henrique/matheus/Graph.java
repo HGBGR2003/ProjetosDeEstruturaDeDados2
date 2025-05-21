@@ -1,24 +1,23 @@
 package org.henrique.matheus;
 
 import java.util.List;
-    public interface Graph<V> {
-        void addVertex(V v);
 
-        void addEdge(V u, V v);
+public interface Graph<V> {
+    void addVertex(V v);
 
-        void addEdgeWeight(V u, V v, Double w);
+    void addEdge(V u, V v);
 
-        int countSelfLoops();
+    void addEdgeWeight(V u, V v, Double w, Boolean val);
 
-        boolean isComplete();
+    int countSelfLoops();
 
-        int degreeOf(V v);
-  
-        List<V> findPath(V from, V to);
+    boolean isComplete();
 
-        String toDigraph();
+    int degreeOf(V v);
 
-        String toDot();
-    }
+    List<V> findPath(V from, V to);
 
+    String toDigraph();
 
+    String toDot();
+}

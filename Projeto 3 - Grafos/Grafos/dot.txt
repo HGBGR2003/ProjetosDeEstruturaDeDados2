@@ -1,6 +1,3 @@
-digraph G {
-  A -> B [label=5.0];
-  B -> A [label=5.0];
-  B -> C [label=3.0];
-  C -> B [label=3.0];
+graph G {
+  "A" -- "C" [label=2.5];
 }

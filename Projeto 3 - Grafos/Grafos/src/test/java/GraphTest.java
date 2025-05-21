@@ -43,8 +43,7 @@ public class GraphTest {
         double weight = 2.5;
         graph.addVertex("A");
         graph.addVertex("C");
-        graph.addEdgeWeight("A", "C", weight);
-
+        graph.addEdgeWeight("A", "C", weight, false);
 
         String dot = graph.toDot();
 
@@ -223,10 +222,10 @@ public class GraphTest {
         graph.addVertex("C");
         graph.addVertex("D");
 
-        graph.addEdgeWeight("A", "B", 1.0);
-        graph.addEdgeWeight("B", "C", 2.0);
-        graph.addEdgeWeight("C", "D", 3.0);
-        graph.addEdgeWeight("A", "D", 10.0);
+        graph.addEdgeWeight("A", "B", 1.0, false);
+        graph.addEdgeWeight("B", "C", 2.0, false);
+        graph.addEdgeWeight("C", "D", 3.0, false);
+        graph.addEdgeWeight("A", "D", 10.0, false);
 
         Map<String, Double> distances = graph.dijkstra("A");
         assertEquals(0.0, distances.get("A"));
@@ -236,6 +235,7 @@ public class GraphTest {
     }
 
     @Test
+    @DisplayName("Código para o menor caminho usando o algoritmo dijkstra")
     public void testNoPath() {
         AdjacencyListGraph<String> graph = new AdjacencyListGraph<>();
         graph.addVertex("A");
@@ -246,24 +246,41 @@ public class GraphTest {
     }
 
     @Test
-    //Verificar o erro.
+    @DisplayName("Teste destinado a mostrar o dot.")
     public void testToDigraph() {
         AdjacencyListGraph<String> graph = new AdjacencyListGraph<>();
         graph.addVertex("A");
         graph.addVertex("B");
         graph.addVertex("C");
+        graph.addVertex("D");
+        graph.addVertex("E");
 
-        graph.addEdgeWeight("A", "B", 5.0);
-        graph.addEdgeWeight("B", "C", 3.0);
-        
+        graph.addEdgeWeight("A", "B", 5.0, true);
 
+        graph.addEdgeWeight("B", "C", 3.0, true);
+        graph.addEdgeWeight("C", "A", 1.5, true);
+
+        graph.addEdgeWeight("B", "D", 4.0, true);
+        graph.addEdgeWeight("D", "E", 6.0, true);
+        graph.addEdgeWeight("E", "B", 2.0, true);
+
+        graph.addEdgeWeight("C", "C", 7.0, true);
 
         String expectedDot = "digraph G {\n" +
                 "  \"A\" -> \"B\" [label=5.0];\n" +
                 "  \"B\" -> \"C\" [label=3.0];\n" +
+                "  \"B\" -> \"D\" [label=4.0];\n" +
+                "  \"C\" -> \"A\" [label=1.5];\n" +
+                "  \"C\" -> \"C\" [label=7.0];\n" +
+                "  \"D\" -> \"E\" [label=6.0];\n" +
+                "  \"E\" -> \"B\" [label=2.0];\n" +
+                "   A;\n" + 
+                "   B;\n" + 
+                "   C;\n" + 
+                "   D;\n" + 
+                "   E;\n" +    
                 "}";
 
         assertEquals(expectedDot.trim(), graph.toDigraph().trim());
     }
-
 }

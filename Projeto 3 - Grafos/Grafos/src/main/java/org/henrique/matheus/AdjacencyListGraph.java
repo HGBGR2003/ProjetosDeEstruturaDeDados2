@@ -57,17 +57,17 @@ public class AdjacencyListGraph<V> implements Graph<V> {
 
     @Override
     public void addEdge(V u, V v) {
-        addEdgeWeight(u, v, null);
+        addEdgeWeight(u, v, null, false);
     }
 
     @Override
-    public void addEdgeWeight(V u, V v, Double w) {
+    public void addEdgeWeight(V u, V v, Double w, Boolean val) {
         if (!adj.containsKey(u) || !adj.containsKey(v)) {
             throw new IllegalArgumentException("Vertex not found: " + u + " or " + v);
         }
         adj.get(u).put(v, w);
-        if (!u.equals(v)) {
-            adj.get(v).put(u, w); 
+        if (!u.equals(v) && !val) {
+            adj.get(v).put(u, w);
         }
 
     }
@@ -186,30 +186,28 @@ public class AdjacencyListGraph<V> implements Graph<V> {
 
     @Override
     public String toDigraph() {
-    StringBuilder sb = new StringBuilder();
-    sb.append("digraph G {\n");
+        StringBuilder sb = new StringBuilder();
+        StringBuilder helpVertice = new StringBuilder();
+        sb.append("digraph G {\n");
 
-    for (Map.Entry<V, Map<V, Double>> entry : adj.entrySet()) {
-        V u = entry.getKey();
-        Map<V, Double> neighbors = entry.getValue();
+        for (Map.Entry<V, Map<V, Double>> entry : adj.entrySet()) {
+            V u = entry.getKey();
+            Map<V, Double> neighbors = entry.getValue();
 
-        if (neighbors.isEmpty()) {
-            sb.append("").append(u).append(";\n");
+            helpVertice.append("   ").append(u).append(";\n");
+
+            for (Map.Entry<V, Double> e : neighbors.entrySet()) {
+                V v = e.getKey();
+                Double w = e.getValue();
+                String edge = "\"" + u + "\"" + " -> " + "\"" + v + "\"";
+
+                sb.append("  ").append(edge).append(" [label=").append(w).append("];\n");
+            }
         }
 
-        for (Map.Entry<V, Double> e : neighbors.entrySet()) {
-            V v = e.getKey();
-            Double w = e.getValue();
-            String edge = u + " -> " + v;
-
-            sb.append("  ").append(edge).append(" [label=").append(w).append("];\n");
-        }
-    }
-
-    sb.append("}\n");
-    String dot = sb.toString();
-    saveInFile(dot, "dot.txt");
-    return dot;
+        String concat = sb.toString() + helpVertice.toString() + "}\n";
+        saveInFile(concat, "dot.txt");
+        return concat;
     }
 
     private static void saveInFile(String dot, String fileName) {
